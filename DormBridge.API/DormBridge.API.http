@@ -1,0 +1,6 @@
+@DormBridge.API_HostAddress = http://localhost:5244
+
+GET {{DormBridge.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
