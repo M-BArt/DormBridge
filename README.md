@@ -4,4 +4,21 @@
 
 <div align="center"><h1 tabindex="-1" class="heading-element" dir="auto">DormBridge</h1></div>
 
-🔳✅
+
+<h1 tabindex="-1" class="heading-element" dir="auto">✨ Features</h1>
+
+<h3><b>Backend aspects:</b></h3>
+
+<h3><b>Frontend aspects:</b></h3>
+
+<b>Authentication page</b>
+
+✅ Implementation of the login panel view
+
+✅ Implementation of the registration panel view
+
+✅ View for "Remind password"
+
+🔳 Responsiveness of the login, regsiter panel (Excluding mobile device).
+
+
