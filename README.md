@@ -9,6 +9,10 @@
 
 <h3><b>Backend aspects:</b></h3>
 
+<b>User Service</b>
+
+🔳 Implementation of user authentication.
+
 <h3><b>Frontend aspects:</b></h3>
 
 <b>Authentication page</b>
