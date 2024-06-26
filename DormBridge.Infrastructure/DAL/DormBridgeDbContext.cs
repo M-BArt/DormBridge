@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DormBridge.Core.Interfaces
+namespace DormBridge.Infrastructure.DAL
 {
-    internal interface IUserRepository
+    internal class DormBridgeDbContext
     {
     }
 }

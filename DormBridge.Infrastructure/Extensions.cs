@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DormBridge.Core.Services
+namespace DormBridge.Infrastructure
 {
-    internal interface IUserService
+    internal class Extensions
     {
     }
 }
