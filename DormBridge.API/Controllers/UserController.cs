@@ -11,6 +11,8 @@ namespace DormBridge.API.Controllers
             _userService = userService;
         }
 
+
+
         [HttpPost("/register")]
         [RequestValidation]
         public async Task<IActionResult> Register() { 
@@ -25,6 +27,8 @@ namespace DormBridge.API.Controllers
                 return StatusCode(500, "Internal Error Server");
             }
         }
+
+
 
         [HttpPost("/login")]
         [RequestValidation]

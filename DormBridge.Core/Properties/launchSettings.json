@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DormBridge.Core": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
