@@ -1,4 +1,7 @@
 
+using DormBridge.Application;
+using DormBridge.Infrastructure;
+
 namespace DormBridge.API
 {
     public class Program
@@ -7,7 +10,12 @@ namespace DormBridge.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers(); 
+            builder.Services.AddApplication();
+            builder.Services.AddInfrastructure(builder.Configuration);
+
+
+
+            builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 

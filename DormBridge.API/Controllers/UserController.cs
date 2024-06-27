@@ -1,27 +1,36 @@
-﻿using DormBridge.API.Filters;
+﻿using System;
+using DormBridge.API.Filters;
+using DormBridge.Application.Abstractions;
+using DormBridge.Application.Commands.User;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace DormBridge.API.Controllers
 {
     public class UserController : BaseController<UserController>
     {
-        private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly ICommandHandler<SignUp> _signUpHandler;
+
+        public UserController(ICommandHandler<SignUp> signUpHandler)
         {
-            _userService = userService;
+            _signUpHandler = signUpHandler;
         }
 
-
-
         [HttpPost("/register")]
-        [RequestValidation]
-        public async Task<IActionResult> Register() { 
-
+        //[RequestValidation]
+        [SwaggerOperation("Registration of new user")]
+        public async Task<IActionResult> Register([FromBody] SignUp command)
+        {
+            if (command == null)
+            {
+                return NotFound(); // Zwraca kod 404 (Not Found), jeśli cygaro nie zostało znalezione
+            }
             try
             {
-                await _userService.Register();
+                await _signUpHandler.HandleAsyncAction(command);
                 return Ok("Create a new user");
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Logger.LogError(ex.Message);
                 return StatusCode(500, "Internal Error Server");
@@ -32,13 +41,15 @@ namespace DormBridge.API.Controllers
 
         [HttpPost("/login")]
         [RequestValidation]
+        [SwaggerOperation("User login")]
         public async Task<IActionResult> Login()
         {
             try
             {
-                await _userService.Login();
+
                 return Ok("User logged in");
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Logger.LogError(ex.Message);
                 return BadRequest(ex.Message);

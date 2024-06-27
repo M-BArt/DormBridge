@@ -1,15 +1,28 @@
-﻿namespace DormBridge.Application.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using DormBridge.Domain.ValueObjects;
+
+namespace DormBridge.Domain.Entities
 {
-    public class User
+    public sealed class User
     {
-        public Guid Guid { get; set; }
+        [Key]
+        public Guid UserGuid { get; set; }
         public string Username { get; set; }
-        public string PasswordHash { get; set; }
-        public string PasswordSalt { get; set; }
-        public string Email { get; set; }
-        public string Role { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
+        public Email Email { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
+
+        public User() { } // Bezparametrowy konstruktor
+
+        public User(string username, byte[] passwordHash, byte[] passwordSalt, Email email)
+        {
+            Username = username;
+            PasswordHash = passwordHash;
+            PasswordSalt = passwordSalt;
+            Email = email;
+        }
 
     }
 }

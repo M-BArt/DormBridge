@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  dormbridge.api:
+    image: ${DOCKER_REGISTRY-}dormbridgeapi
+    build:
+      context: .
+      dockerfile: DormBridge.API/Dockerfile
+
+  DormBridgeDB:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    ports:
+      - "1433:1433"
+    environment:
+      MSSQL_SA_PASSWORD: "6858212ASDzxc"
+      ACCEPT_EULA: "Y"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge

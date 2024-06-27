@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DormBridge.Application.Entities
+namespace DormBridge.Domain.Entities
 {
     public class Staff
     {
