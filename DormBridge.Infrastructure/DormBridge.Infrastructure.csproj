@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+    <Folder Include="Queries\Handlers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DormBridge.Data\DormBridge.Application.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+  </ItemGroup>
+
 </Project>

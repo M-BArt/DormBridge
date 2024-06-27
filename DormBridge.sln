@@ -5,13 +5,15 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DormBridge.API", "DormBridge.API\DormBridge.API.csproj", "{26E7DB6C-963D-4867-889B-80A9C169EBF1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DormBridge.Core", "DormBridge.Core\DormBridge.Core.csproj", "{F53CE702-5A0C-42AD-AF85-CC3806468AAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DormBridge.Domain", "DormBridge.Core\DormBridge.Domain.csproj", "{F53CE702-5A0C-42AD-AF85-CC3806468AAD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DormBridge.Application", "DormBridge.Data\DormBridge.Application.csproj", "{74BB66E4-74A9-4965-8A6B-04FF48AE00E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{AF28F73F-58E9-48D3-9A76-295DD2C60A55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DormBridge.Infrastructure", "DormBridge.Infrastructure\DormBridge.Infrastructure.csproj", "{800A8D8D-B185-4B13-AD08-736BC503F9FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DormBridge.Infrastructure", "DormBridge.Infrastructure\DormBridge.Infrastructure.csproj", "{800A8D8D-B185-4B13-AD08-736BC503F9FF}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{50E271EE-4E0D-4D02-A557-8A28BD788C1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{DC56B53A-90DF-4171-8D68-36C794F48505}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +33,18 @@ Global
 		{74BB66E4-74A9-4965-8A6B-04FF48AE00E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74BB66E4-74A9-4965-8A6B-04FF48AE00E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74BB66E4-74A9-4965-8A6B-04FF48AE00E6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AF28F73F-58E9-48D3-9A76-295DD2C60A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF28F73F-58E9-48D3-9A76-295DD2C60A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF28F73F-58E9-48D3-9A76-295DD2C60A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF28F73F-58E9-48D3-9A76-295DD2C60A55}.Release|Any CPU.Build.0 = Release|Any CPU
 		{800A8D8D-B185-4B13-AD08-736BC503F9FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{800A8D8D-B185-4B13-AD08-736BC503F9FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{800A8D8D-B185-4B13-AD08-736BC503F9FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{800A8D8D-B185-4B13-AD08-736BC503F9FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50E271EE-4E0D-4D02-A557-8A28BD788C1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50E271EE-4E0D-4D02-A557-8A28BD788C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50E271EE-4E0D-4D02-A557-8A28BD788C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50E271EE-4E0D-4D02-A557-8A28BD788C1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC56B53A-90DF-4171-8D68-36C794F48505}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC56B53A-90DF-4171-8D68-36C794F48505}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC56B53A-90DF-4171-8D68-36C794F48505}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC56B53A-90DF-4171-8D68-36C794F48505}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
