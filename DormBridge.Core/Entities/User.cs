@@ -16,12 +16,15 @@ namespace DormBridge.Domain.Entities
 
         public User() { } // Bezparametrowy konstruktor
 
-        public User(string username, byte[] passwordHash, byte[] passwordSalt, Email email)
+        public User(Guid userGuid, string username, byte[] passwordHash, byte[] passwordSalt, Email email, DateTime createDate, DateTime updateDate)
         {
+            UserGuid = userGuid;
             Username = username;
             PasswordHash = passwordHash;
             PasswordSalt = passwordSalt;
             Email = email;
+            CreateDate = createDate;
+            UpdateDate = updateDate;
         }
 
     }
