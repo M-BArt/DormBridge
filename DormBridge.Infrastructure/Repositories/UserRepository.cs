@@ -18,6 +18,7 @@ namespace DormBridge.Infrastructure.Repositories
         public async Task AddAsync(User user)
         {
             await _dbContext.AddAsync(user);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<User?> GetUserByEmailAsync(Email email)
