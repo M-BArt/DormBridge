@@ -1,11 +1,11 @@
 ﻿using System.Text.RegularExpressions;
 using DormBridge.Domain.Exceptions;
 
-namespace DormBridge.Domain.ValueObjects
+namespace DormBridge.Domain.ValueObjects.User
 {
     public sealed record Email
     {
-        private static readonly Regex _regex = new(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",RegexOptions.Compiled);
+        private static readonly Regex _regex = new(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", RegexOptions.Compiled);
 
         public string Value { get; set; }
 

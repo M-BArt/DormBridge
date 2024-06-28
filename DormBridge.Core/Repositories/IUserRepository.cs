@@ -1,5 +1,5 @@
 ﻿using DormBridge.Domain.Entities;
-using DormBridge.Domain.ValueObjects;
+using DormBridge.Domain.ValueObjects.User;
 
 namespace DormBridge.Domain.Repositories
 {

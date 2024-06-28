@@ -1,6 +1,6 @@
 ﻿using DormBridge.Domain.Entities;
 using DormBridge.Domain.Repositories;
-using DormBridge.Domain.ValueObjects;
+using DormBridge.Domain.ValueObjects.User;
 using DormBridge.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
 

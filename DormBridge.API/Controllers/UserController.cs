@@ -27,7 +27,6 @@ namespace DormBridge.API.Controllers
             }
             try
             {
-                command = command with { UserGuid = Guid.NewGuid() };
                 await _signUpHandler.HandleAsyncAction(command);
                 return Ok("Create a new user");
             }

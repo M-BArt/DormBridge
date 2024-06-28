@@ -16,10 +16,12 @@ namespace DormBridge.Infrastructure.Migrations
                 columns: table => new
                 {
                     UserGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StudentId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
@@ -27,6 +29,12 @@ namespace DormBridge.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.UserGuid);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Username",
