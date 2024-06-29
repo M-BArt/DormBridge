@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using DormBridge.Domain.ValueObjects.Student;
+﻿using DormBridge.Domain.ValueObjects.Student;
 using DormBridge.Domain.ValueObjects.User;
 
 namespace DormBridge.Domain.Entities
@@ -16,7 +15,7 @@ namespace DormBridge.Domain.Entities
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
 
-        public User(Guid userGuid, Username username, Email email, Role role, string studentId, byte[] passwordHash, byte[] passwordSalt, DateTime createDate, DateTime updateDate)
+        public User(Guid userGuid, Username username, Email email, Role role, StudentId studentId, byte[] passwordHash, byte[] passwordSalt, DateTime createDate, DateTime updateDate)
         {
             UserGuid = userGuid;
             Username = username;

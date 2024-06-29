@@ -24,15 +24,16 @@ namespace DormBridge.Application.Commands.User.Handlers
                 throw new EmailAlreadyInUseException(command.Email);         
             if (await _userRepository.GetUserByNameAsync(new Username(command.Username)) is not null)
                 throw new UsernameAlreadyInUseException(command.Username);
-            if (await _userRepository.GetUserByStudentIdAsync(new StudentId(command.StudentId)) is not null)
-                throw new StudentIdAlreadyInUse(command.StudentId);
+            //if (await _userRepository.GetUserByStudentIdAsync(new StudentId(command.StudentId)) is not null)
+                //throw new StudentIdAlreadyInUse(command.StudentId);
             if (!(command.Password == command.RepeatPassword))
-                throw new Exception("Passwords aren't the same");
+                throw new PasswordsAreNotTheSame();
 
             var studentId = command.StudentId;
             CreateHashPassword(command.Password, out byte[] passwordHash, out byte[] passwordSalt);
             
             var role = Role.User();
+            var zxc = _studentRepository.GetStudentByStudentIdAsync(new StudentId(command.StudentId));
             if (await _studentRepository.GetStudentByStudentIdAsync(new StudentId(command.StudentId)) is not null)
                 Role.Student();
 

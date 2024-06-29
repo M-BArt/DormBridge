@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DormBridge.Domain.Exceptions;
 using DormBridge.Domain.ValueObjects.User;
+using Microsoft.Identity.Client;
 
 namespace DormBridge.Domain.ValueObjects.Student
 {
@@ -13,9 +15,10 @@ namespace DormBridge.Domain.ValueObjects.Student
 
         public StudentId(string value)
         {
-            if (value.Length != 9 || value is not null)
-                throw new ArgumentException();
-            
+            if (value is not null)
+                if (value.Length != 9 && !value.All(char.IsDigit))
+                    throw new InvalidStudentIdException(value);
+
             Value = value;
         }
 

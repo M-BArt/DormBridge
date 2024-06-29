@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DormBridge.Domain.ValueObjects.Student
 {
@@ -11,6 +12,9 @@ namespace DormBridge.Domain.ValueObjects.Student
         public string Value { get; set; }
         public Name(string value)
         {
+            if (value.IsNullOrEmpty())
+                throw new ArgumentNullException("value"); 
+
             Value = value;
         }
 

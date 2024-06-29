@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using DormBridge.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using DormBridge.Domain.ValueObjects.User;
+using DormBridge.Domain.ValueObjects.Student;
 
 namespace DormBridge.Infrastructure.DAL.Configurations
 {
@@ -15,18 +17,14 @@ namespace DormBridge.Infrastructure.DAL.Configurations
         {
             builder.HasKey(u => u.StudnetGuid);
 
-            builder.Property(u => u.StudentId).IsRequired().HasMaxLength(9);
+            builder.Property(u => u.StudentId).IsRequired().HasMaxLength(9).HasConversion(u => u.Value, u => new StudentId(u));
             builder.HasIndex(u => u.StudentId).IsUnique();
 
-            builder.Property(u => u.Firstname).IsRequired();
-            builder.Property(u => u.Lastname).IsRequired();
-            builder.Property(u => u.Address);
-            builder.Property(u => u.PhoneNumber);
-
-            //builder.Property(u => u.Email).IsRequired().HasMaxLength(100)
-            //    .HasConversion(u => u.Value, u => new Email(u));
-            //builder.HasIndex(u => u.Email).IsUnique();
-          
+            builder.Property(u => u.Firstname).IsRequired().HasConversion(u => u.Value, u => new Name(u));
+            builder.Property(u => u.Lastname).IsRequired().HasConversion(u => u.Value, u => new Name(u));
+            builder.Property(u => u.Address).HasConversion(u => u.Value, u => new Address(u));
+            builder.Property(u => u.PhoneNumber).HasConversion(u => u.Value, u => new Phone(u));
+         
             builder.Property(u => u.CreateDate).HasColumnType("datetime").IsRequired();
             builder.Property(u => u.UpdateDate).HasColumnType("datetime").IsRequired();
         }

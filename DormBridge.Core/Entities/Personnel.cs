@@ -1,6 +1,6 @@
 ﻿namespace DormBridge.Domain.Entities
 {
-    public class Building
+    public class Personnel
     {
         public Guid Guid { get; set; }
         public DateTime CreateDate { get; set; }

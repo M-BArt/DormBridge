@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DormBridge.Domain.ValueObjects.User
+﻿namespace DormBridge.Domain.ValueObjects.User
 {
     public sealed record Username
     {
@@ -22,5 +16,6 @@ namespace DormBridge.Domain.ValueObjects.User
 
         public static implicit operator string(Username userName) => userName.Value;
         public static implicit operator Username(string value) => new(value);
+        public override string ToString() => Value;
     }
 }

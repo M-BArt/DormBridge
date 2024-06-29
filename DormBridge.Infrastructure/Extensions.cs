@@ -21,6 +21,7 @@ namespace DormBridge.Infrastructure
                 options.UseSqlServer(connectionString));
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IStudentRepository, StudentRepository>();
 
             return services;
         }
