@@ -6,6 +6,7 @@ namespace DormBridge.Infrastructure.DAL
     internal sealed class DormBridgeDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Student> Students { get; set; }
 
         public DormBridgeDbContext(DbContextOptions<DormBridgeDbContext> dbContextOptions) : base(dbContextOptions) { }
 

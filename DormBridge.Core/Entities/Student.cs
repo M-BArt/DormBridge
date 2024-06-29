@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DormBridge.Domain.ValueObjects.Student;
 
 namespace DormBridge.Domain.Entities
 {
-    public class Student
+    public sealed class Student
     {
-        public Guid Guid { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
-        public string Adress { get; set; }
-        public int AlbumNumber { get; set; }
-        public int PhoneNumber { get; set; }
+        public Guid StudnetGuid { get; set; }
+        public StudentId StudentId { get; set; }
+        public Name Firstname { get; set; }
+        public Name Lastname { get; set; }
+        public Address Address { get; set; }
+        public Phone PhoneNumber { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
     }

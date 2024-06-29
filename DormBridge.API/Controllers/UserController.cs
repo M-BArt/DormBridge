@@ -21,10 +21,6 @@ namespace DormBridge.API.Controllers
         [SwaggerOperation("Registration of new user")]
         public async Task<IActionResult> Register([FromBody] SignUp command)
         {
-            if (command == null)
-            {
-                return NotFound(); // Zwraca kod 404 (Not Found), jeśli cygaro nie zostało znalezione
-            }
             try
             {
                 await _signUpHandler.HandleAsyncAction(command);
