@@ -10,10 +10,12 @@ namespace DormBridge.API.Controllers
     public class UserController : BaseController<UserController>
     {
         private readonly ICommandHandler<SignUp> _signUpHandler;
+        private readonly ICommandHandler<SignIn> _signInHandler;
 
-        public UserController(ICommandHandler<SignUp> signUpHandler)
+        public UserController(ICommandHandler<SignUp> signUpHandler, ICommandHandler<SignIn> signInHandler)
         {
             _signUpHandler = signUpHandler;
+            _signInHandler = signInHandler;
         }
 
         [HttpPost("/register")]
@@ -36,19 +38,19 @@ namespace DormBridge.API.Controllers
 
 
         [HttpPost("/login")]
-        [RequestValidation]
+        //[RequestValidation]
         [SwaggerOperation("User login")]
-        public async Task<IActionResult> Login()
+        public async Task<IActionResult> Login([FromBody] SignIn command)
         {
             try
             {
-
+                await _signInHandler.HandleAsyncAction(command);
                 return Ok("User logged in");
             }
             catch (Exception ex)
             {
                 Logger.LogError(ex.Message);
-                return BadRequest(ex.Message);
+                return StatusCode(500, "Internal Error Server");
             }
         }
     }

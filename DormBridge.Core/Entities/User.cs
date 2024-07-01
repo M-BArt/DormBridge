@@ -9,7 +9,7 @@ namespace DormBridge.Domain.Entities
         public Username Username { get; set; }
         public Email Email { get; set; }
         public Role Role { get; set; }
-        public StudentId StudentId { get; set; }
+        public StudentId? StudentId { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public DateTime CreateDate { get; set; }

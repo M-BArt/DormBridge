@@ -4,6 +4,7 @@ using DormBridge.Application.Exceptions.User;
 using DormBridge.Domain.Repositories;
 using DormBridge.Domain.ValueObjects.User;
 using DormBridge.Domain.ValueObjects.Student;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DormBridge.Application.Commands.User.Handlers
 {
@@ -22,27 +23,33 @@ namespace DormBridge.Application.Commands.User.Handlers
         {
             if (await _userRepository.GetUserByEmailAsync(new Email(command.Email)) is not null)
                 throw new EmailAlreadyInUseException(command.Email);         
+            
             if (await _userRepository.GetUserByNameAsync(new Username(command.Username)) is not null)
                 throw new UsernameAlreadyInUseException(command.Username);
-            //if (await _userRepository.GetUserByStudentIdAsync(new StudentId(command.StudentId)) is not null)
-                //throw new StudentIdAlreadyInUse(command.StudentId);
+           
+            if (await _userRepository.GetUserByStudentIdAsync(new StudentId(command.StudentId)) is not null)
+                throw new StudentIdAlreadyInUse(command.StudentId);
+            
             if (!(command.Password == command.RepeatPassword))
                 throw new PasswordsAreNotTheSame();
 
-            var studentId = command.StudentId;
+
             CreateHashPassword(command.Password, out byte[] passwordHash, out byte[] passwordSalt);
             
             var role = Role.User();
-            var zxc = _studentRepository.GetStudentByStudentIdAsync(new StudentId(command.StudentId));
-            if (await _studentRepository.GetStudentByStudentIdAsync(new StudentId(command.StudentId)) is not null)
-                Role.Student();
+
+            if (!command.StudentId.IsNullOrEmpty())
+                if (await _studentRepository.GetStudentByStudentIdAsync(new StudentId(command.StudentId)) is not null)
+                    Role.Student();
+                else
+                    throw new StudentIdNoExist(command.StudentId);
 
             var user = new Domain.Entities.User(
                 Guid.NewGuid(),
                 new Username(command.Username),
                 new Email(command.Email),
                 role,
-                studentId,
+                new StudentId(command.StudentId),
                 passwordHash,
                 passwordSalt,
                 DateTime.Now,

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DormBridge.Application.Abstractions;
 
 namespace DormBridge.Application.Commands.User
 {
-    internal class SignIn
-    {
-    }
+    public record SignIn(string Login, string Password) : ICommand;
 }

@@ -13,8 +13,6 @@ namespace DormBridge.API
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
 
-
-
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -26,7 +24,7 @@ namespace DormBridge.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();

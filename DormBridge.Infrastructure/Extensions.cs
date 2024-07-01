@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DormBridge.Domain.Repositories;
+﻿using DormBridge.Domain.Repositories;
+using DormBridge.Infrastructure.Authenticator;
 using DormBridge.Infrastructure.DAL;
 using DormBridge.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +15,8 @@ namespace DormBridge.Infrastructure
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DormBridgeDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            services.AddAuthenticator(configuration);
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IStudentRepository, StudentRepository>();

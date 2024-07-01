@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DormBridge.Domain.Exceptions;
 using DormBridge.Domain.ValueObjects.User;
 using Microsoft.Identity.Client;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DormBridge.Domain.ValueObjects.Student
 {
@@ -13,11 +14,17 @@ namespace DormBridge.Domain.ValueObjects.Student
     {
         public string? Value;
 
-        public StudentId(string value)
+        public StudentId(string? value)
         {
-            if (value is not null)
-                if (value.Length != 9 && !value.All(char.IsDigit))
+            if (!value.IsNullOrEmpty())
+            {
+                if (value.Length != 9 || !value.All(char.IsDigit))
                     throw new InvalidStudentIdException(value);
+            }
+            else 
+            { 
+                value = null; 
+            }
 
             Value = value;
         }
