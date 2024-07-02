@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DormBridge.Application.Exceptions.User
 {
-    public sealed class PasswordsAreNotTheSame : Exception
+    public sealed class InvalidPasswordOrLogin : Exception
     {
-        public PasswordsAreNotTheSame() : base($"Passwords aren't the same") { }
+        public InvalidPasswordOrLogin() : base($"Invalid password or login"){ }
     }
 }

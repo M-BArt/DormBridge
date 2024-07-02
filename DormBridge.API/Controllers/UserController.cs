@@ -8,11 +8,15 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace DormBridge.API.Controllers
 {
+    [Route("[controller]")]
     public class UserController : BaseController<UserController>
     {
         private readonly ICommandHandler<SignUp> _signUpHandler;
         private readonly ICommandHandler<SignIn> _signInHandler;
+        
         private readonly IHttpContextAccessor _httpContextAccessor;
+
+
 
         public UserController(ICommandHandler<SignUp> signUpHandler, ICommandHandler<SignIn> signInHandler, IHttpContextAccessor httpContextAccessor)
         {
@@ -22,7 +26,6 @@ namespace DormBridge.API.Controllers
         }
 
         [HttpPost("/register")]
-        //[RequestValidation]
         [SwaggerOperation("Registration of new user")]
         public async Task<IActionResult> Register([FromBody] SignUp command)
         {
@@ -41,7 +44,6 @@ namespace DormBridge.API.Controllers
 
 
         [HttpPost("/login")]
-        //[RequestValidation]
         [SwaggerOperation("User login")]
         public async Task<IActionResult?> Login([FromBody] SignIn command)
         {
@@ -54,6 +56,7 @@ namespace DormBridge.API.Controllers
                 {
                     return Ok(jwt as JsonWebTokenDTO);
                 }
+                
                 return Ok("Ok");
             }
             catch (Exception ex)
@@ -62,5 +65,21 @@ namespace DormBridge.API.Controllers
                 return StatusCode(500, "Internal Error Server");
             }
         }
+        
+        [HttpGet("/users")
+        public async Task<IActionResult> GetUsers()
+        {
+            try
+            {
+                await 
+                return Ok();
+            } 
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.Message);
+                return StatusCode(500, "Internal Error Server");
+            }
+        }
+
     }
 }

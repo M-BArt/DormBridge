@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DormBridge.Application.DTOs.User
+namespace DormBridge.Infrastructure.Queries.Handlers
 {
-
-    public class JwtDto
+    internal class GetUsersHandler
     {
-        public string AccessToken { get; set; }
     }
 }

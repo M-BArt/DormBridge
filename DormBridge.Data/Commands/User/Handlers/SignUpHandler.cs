@@ -21,7 +21,7 @@ namespace DormBridge.Application.Commands.User.Handlers
 
         public async Task HandleAsyncAction(SignUp command)
         {
-            if (await _userRepository.GetUserByEmailAsync(new Email(command.Email)) is not null)
+            if (await _userRepository.GetUserByEmailAsync(new Email(command.Email)) is not null) 
                 throw new EmailAlreadyInUseException(command.Email);         
             
             if (await _userRepository.GetUserByNameAsync(new Username(command.Username)) is not null)
