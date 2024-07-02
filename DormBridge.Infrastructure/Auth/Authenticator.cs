@@ -1,12 +1,12 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using DormBridge.Application.Authenticator;
 using DormBridge.Application.DTOs.User;
-using DormBridge.Infrastructure.Authenticator;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace DormBridge.Application.Authenticatior
+namespace DormBridge.Infrastructure.Auth
 {
     internal class Authenticator : IAuthenticator
     {
@@ -18,10 +18,10 @@ namespace DormBridge.Application.Authenticatior
 
         public Authenticator(IOptions<AuthenticatorOptions> options)
         {
-            _issuer = options.Value.Issuer;
-            _audience = options.Value.Audience;
-            _expiry = options.Value.Expiry ?? TimeSpan.FromHours(1);
-            _signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Value.SigninKey)), SecurityAlgorithms.HmacSha256);
+            _issuer = options.Value.JwtIssuer;
+            _audience = options.Value.JwtAudience;
+            _expiry = options.Value.JwtExpiry ?? TimeSpan.FromHours(1);
+            _signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Value.JwtKey)), SecurityAlgorithms.HmacSha256);
         }
         public JsonWebTokenDTO CreateToken(Guid userId, string role)
         {

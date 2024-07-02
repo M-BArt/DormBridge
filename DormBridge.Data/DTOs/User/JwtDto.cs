@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DormBridge.Application.Authenticatior
+namespace DormBridge.Application.DTOs.User
 {
-    internal class Authenticator
+
+    public class JwtDto
     {
+        public string AccessToken { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DormBridge.Application.DTOs.User;
 
-namespace DormBridge.Application.Authenticatior
+namespace DormBridge.Application.Authenticator
 {
     public interface IAuthenticator
     {

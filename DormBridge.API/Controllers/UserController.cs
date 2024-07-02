@@ -2,6 +2,7 @@
 using DormBridge.API.Filters;
 using DormBridge.Application.Abstractions;
 using DormBridge.Application.Commands.User;
+using DormBridge.Application.DTOs.User;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -11,11 +12,13 @@ namespace DormBridge.API.Controllers
     {
         private readonly ICommandHandler<SignUp> _signUpHandler;
         private readonly ICommandHandler<SignIn> _signInHandler;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserController(ICommandHandler<SignUp> signUpHandler, ICommandHandler<SignIn> signInHandler)
+        public UserController(ICommandHandler<SignUp> signUpHandler, ICommandHandler<SignIn> signInHandler, IHttpContextAccessor httpContextAccessor)
         {
             _signUpHandler = signUpHandler;
             _signInHandler = signInHandler;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpPost("/register")]
@@ -40,12 +43,18 @@ namespace DormBridge.API.Controllers
         [HttpPost("/login")]
         //[RequestValidation]
         [SwaggerOperation("User login")]
-        public async Task<IActionResult> Login([FromBody] SignIn command)
+        public async Task<IActionResult?> Login([FromBody] SignIn command)
         {
             try
             {
                 await _signInHandler.HandleAsyncAction(command);
-                return Ok("User logged in");
+                
+
+                if (_httpContextAccessor.HttpContext.Items.TryGetValue("JWT", out var jwt))
+                {
+                    return Ok(jwt as JsonWebTokenDTO);
+                }
+                return Ok("Ok");
             }
             catch (Exception ex)
             {

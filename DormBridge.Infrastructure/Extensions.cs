@@ -1,5 +1,6 @@
-﻿using DormBridge.Domain.Repositories;
-using DormBridge.Infrastructure.Authenticator;
+﻿using DormBridge.Application.Authenticator;
+using DormBridge.Domain.Repositories;
+using DormBridge.Infrastructure.Auth;
 using DormBridge.Infrastructure.DAL;
 using DormBridge.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,8 @@ namespace DormBridge.Infrastructure
                 options.UseSqlServer(connectionString));
 
             services.AddAuthenticator(configuration);
-
+            
+            services.AddHttpContextAccessor();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IStudentRepository, StudentRepository>();
 
