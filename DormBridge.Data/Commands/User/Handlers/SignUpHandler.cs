@@ -21,13 +21,13 @@ namespace DormBridge.Application.Commands.User.Handlers
 
         public async Task HandleAsyncAction(SignUp command)
         {
-            if (await _userRepository.GetUserByEmailAsync(new Email(command.Email)) is not null) 
-                throw new EmailAlreadyInUseException(command.Email);         
-            
-            if (await _userRepository.GetUserByNameAsync(new Username(command.Username)) is not null)
+            if (await _userRepository.GetUserByEmailAsync(new Email(command.Email)) != null)
+                throw new EmailAlreadyInUseException(command.Email);
+
+            if (await _userRepository.GetUserByNameAsync(new Username(command.Username)) != null)
                 throw new UsernameAlreadyInUseException(command.Username);
            
-            if (await _userRepository.GetUserByStudentIdAsync(new StudentId(command.StudentId)) is not null)
+            if (await _userRepository.GetUserByStudentIdAsync(new StudentId(command.StudentId)) != null)
                 throw new StudentIdAlreadyInUse(command.StudentId);
             
             if (!(command.Password == command.RepeatPassword))
@@ -39,7 +39,7 @@ namespace DormBridge.Application.Commands.User.Handlers
             var role = Role.User();
 
             if (!command.StudentId.IsNullOrEmpty())
-                if (await _studentRepository.GetStudentByStudentIdAsync(new StudentId(command.StudentId)) is not null)
+                if (await _studentRepository.GetStudentByStudentIdAsync(new StudentId(command.StudentId)) != null)
                     Role.Student();
                 else
                     throw new StudentIdNoExist(command.StudentId);

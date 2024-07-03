@@ -21,14 +21,21 @@ namespace DormBridge.Infrastructure
             services.AddDbContext<DormBridgeDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            services.AddAuthenticator(configuration);
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(15);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             
+            
+            services.AddAuthenticator(configuration);
             services.AddHttpContextAccessor();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<IQueryHandler<GetUsers, IEnumerable<UserDto>>, GetUsersHandler>();
 
-            // Add CORS policy
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -39,7 +46,7 @@ namespace DormBridge.Infrastructure
                                .AllowAnyHeader();
                     });
             });
-
+             
             return services;
         }
     }

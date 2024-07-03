@@ -22,6 +22,7 @@ namespace DormBridge.API
             }
             app.UseCors("AllowAll");
             app.UseAuthentication();
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();

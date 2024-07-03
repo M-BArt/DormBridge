@@ -22,13 +22,14 @@ namespace DormBridge.Application.Commands.User.Handlers
 
         public async Task HandleAsyncAction(SignIn command)
         {
-            var user = await _userRepository.GetUserByEmailAsync(command.Login) 
-                ?? throw new InvalidPasswordOrLogin();
+            var user = await _userRepository.GetUserByEmailAsync(command.Login) ?? throw new InvalidPasswordOrLogin();
 
             if (!VerifyHashPassword(command.Password, user.PasswordHash, user.PasswordSalt))
                 throw new InvalidPasswordOrLogin();
 
             var token = _authenticator.CreateToken(user.UserGuid, user.Role);
+
+            _httpContextAccessor.HttpContext?.Session.SetString("JWToken", token.ToString());
 
             _httpContextAccessor.HttpContext?.Items.TryAdd("JWT", token);     
         }
