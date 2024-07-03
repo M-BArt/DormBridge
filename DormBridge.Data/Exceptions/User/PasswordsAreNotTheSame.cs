@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DormBridge.Application.Exceptions.User
 {
-    public sealed class PasswordsAreNotTheSame : Exception
+    public sealed class PasswordsAreNotTheSame : BusinessException
     {
         public PasswordsAreNotTheSame() : base($"Passwords aren't the same") { }
     }

@@ -16,7 +16,7 @@
             style="width: 350px; background-color: #34415f; color: white"
           >
             <q-card-section class="q-gutter-lg">
-              <q-input color="white" outlined v-model="text" label="Username or email" dark>
+              <q-input color="white" outlined v-model="text" label="Email" dark>
                 <template v-slot:prepend>
                   <q-icon name="account_circle" color="white" text-color="white" />
                 </template>

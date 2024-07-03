@@ -6,6 +6,6 @@ namespace DormBridge.Application.Queries
     public class GetUsers : IQuery<IEnumerable<UserDto>>
     {
         public int PageNumber { get; set; }
-        public string PageSize { get; set; }
+        public int PageSize { get; set; }
     }
 }

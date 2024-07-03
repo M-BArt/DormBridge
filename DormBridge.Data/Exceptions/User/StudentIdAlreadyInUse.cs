@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DormBridge.Application.Exceptions.User
 {
-    public sealed class StudentIdAlreadyInUse : Exception
+    public sealed class StudentIdAlreadyInUse : BusinessException
     {
         public string StudentId { get; set; }
         public StudentIdAlreadyInUse(string studentId) : base($"Student ID: {studentId} is already in use")

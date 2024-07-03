@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DormBridge.Application.Exceptions.User
 {
-    public sealed class StudentIdNoExist : Exception
+    public sealed class StudentIdNoExist : BusinessException
     {
         public string Value { get; set; }
 

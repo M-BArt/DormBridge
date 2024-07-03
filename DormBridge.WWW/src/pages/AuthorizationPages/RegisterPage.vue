@@ -14,31 +14,31 @@
             <q-separator />
             <!-- Username Input -->
             <q-card-section class="q-gutter-lg">
-              <q-input dark v-model="text" label="Username" color="white">
+              <q-input dark v-model="username" label="Username" color="white">
                 <template v-slot:prepend>
                   <q-icon name="person" />
                 </template>
               </q-input>
               <!-- Email Input -->
-              <q-input dark v-model="text" label="Email" color="white">
+              <q-input dark v-model="email" label="Email" color="white">
                 <template v-slot:prepend>
                   <q-icon name="email" />
                 </template>
               </q-input>
               <!-- Password Input -->
-              <q-input dark v-model="text" label="Password" color="white">
+              <q-input dark v-model="password" label="Password" color="white">
                 <template v-slot:prepend>
                   <q-icon name="lock" />
                 </template>
               </q-input>
               <!-- Confirm Password Input -->
-              <q-input dark v-model="text" label="Confirm Password" color="white">
+              <q-input dark v-model="repeatPassword" label="Confirm Password" color="white">
                 <template v-slot:prepend>
                   <q-icon name="lock_reset" />
                 </template>
               </q-input>
               <!-- Student ID Input -->
-              <q-input dark v-model="text" label="Student ID" color="white">
+              <q-input dark v-model="studentId" label="Student ID" color="white">
                 <template v-slot:prepend>
                   <q-icon name="fingerprint" />
                 </template>
@@ -49,7 +49,7 @@
 
             <!-- Button -->
             <q-card-actions vertical>
-              <q-btn flat style="background: #21ba45">Zarejestruj się</q-btn>
+              <q-btn flat style="background: #21ba45" @click="registerUser">Zarejestruj się</q-btn>
             </q-card-actions>
 
             <div class="flex flex-center q-pa-md">
@@ -66,6 +66,41 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { UserService, UserSignUp } from 'src/API/UserService';
+import { useQuasar } from 'quasar';
 
-const text = ref<string>('');
+const $q = useQuasar();
+
+const username = ref<string>('');
+const email = ref<string>('');
+const password = ref<string>('');
+const repeatPassword = ref<string>('');
+const studentId = ref<string>('');
+const serverMessage = ref<string>('');
+
+const registerUser = async () => {
+  if (password.value !== repeatPassword.value) {
+    $q.notify({
+      type: 'negative',
+      message: 'Passwords do not match',
+    });
+    return;
+  }
+
+  try {
+    const data: UserSignUp = {
+      username: username.value,
+      email: email.value,
+      password: password.value,
+      repeatPassword: repeatPassword.value,
+      studentId: studentId.value,
+    };
+    const response = await UserService.SignUp(data);
+
+    $q.notify({ type: 'positive', message: '' });
+  } catch (error: any) {
+    $q.notify({ type: 'negative', message: error.response.data });
+    console.error('Error during registration:', error.response.data);
+  }
+};
 </script>

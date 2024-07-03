@@ -40,6 +40,14 @@ namespace DormBridge.Infrastructure.Auth
                     };
                 });
 
+            services.AddAuthorization(authorization =>
+            {
+                authorization.AddPolicy("IsPersonnel", policy =>
+                {
+                    policy.RequireRole("personnel");
+                });
+            });
+
             return services;
         }
     }

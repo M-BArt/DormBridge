@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DormBridge.Application.Exceptions.User
 {
-    public sealed class InvalidPasswordOrLogin : Exception
+    public sealed class InvalidPasswordOrLogin : BusinessException
     {
         public InvalidPasswordOrLogin() : base($"Invalid password or login"){ }
     }
