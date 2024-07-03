@@ -11,7 +11,7 @@
 
 <b>User Service</b>
 
-🔳 Implementation of user authentication.
+✅ Implementation of user authentication.
 
 <h3><b>Frontend aspects:</b></h3>
 
