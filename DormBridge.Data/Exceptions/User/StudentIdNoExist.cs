@@ -10,7 +10,7 @@ namespace DormBridge.Application.Exceptions.User
     {
         public string Value { get; set; }
 
-        public StudentIdNoExist(string value) :base ($"StudentID: Student id {value} no exist.")
+        public StudentIdNoExist(string value) :base ($"Student id [{value}] no exist. Use a valid student ID to register an account, or leave the field blank.")
         {
             Value = value;
         }

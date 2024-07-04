@@ -3,10 +3,7 @@
     <q-page-container>
       <q-page class="flex flex-center column">
         <div class="q-pa-md row items-start q-gutter-md">
-          <q-card
-            class="my-card inset-shadow-down shadow-10"
-            style="width: 350px; background-color: #34415f; color: white"
-          >
+          <q-card class="my-card inset-shadow-down shadow-10 asd" style="width: 350px; color: white">
             <div class="flex flex-center">
               <h3 class="q-ma-md">Registration</h3>
               <p>Fill out the form carefully for registration</p>
@@ -76,7 +73,6 @@ const email = ref<string>('');
 const password = ref<string>('');
 const repeatPassword = ref<string>('');
 const studentId = ref<string>('');
-const serverMessage = ref<string>('');
 
 const registerUser = async () => {
   if (password.value !== repeatPassword.value) {
@@ -97,10 +93,9 @@ const registerUser = async () => {
     };
     const response = await UserService.SignUp(data);
 
-    $q.notify({ type: 'positive', message: '' });
+    $q.notify({ type: 'positive', message: response.toString() });
   } catch (error: any) {
     $q.notify({ type: 'negative', message: error.response.data });
-    console.error('Error during registration:', error.response.data);
   }
 };
 </script>

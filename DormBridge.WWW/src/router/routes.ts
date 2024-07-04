@@ -1,6 +1,6 @@
-import { RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
-const routes: RouteRecordRaw[] = [
+const routes = [
   {
     path: '/',
     component: () => import('layouts/AuthorizationLayout.vue'),
@@ -23,7 +23,8 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/main',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    children: [{ path: '/asd', component: () => import('pages/IndexPage.vue') }],
+    meta: { requiresAuth: true },
   },
 
   {
@@ -31,5 +32,19 @@ const routes: RouteRecordRaw[] = [
     component: () => import('pages/ErrorNotFound.vue'),
   },
 ];
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token');
+  if (to.matched.some((record) => record.meta.requiresAuth) && !token) {
+    next({ name: 'login' });
+  } else {
+    next();
+  }
+});
 
 export default routes;

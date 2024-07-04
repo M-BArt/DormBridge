@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using Azure;
 using DormBridge.Application.Abstractions;
 using DormBridge.Application.Authenticator;
 using DormBridge.Application.DTOs.User;
@@ -31,7 +32,17 @@ namespace DormBridge.Application.Commands.User.Handlers
 
             _httpContextAccessor.HttpContext?.Session.SetString("JWToken", token.ToString());
 
-            _httpContextAccessor.HttpContext?.Items.TryAdd("JWT", token);     
+            _httpContextAccessor.HttpContext?.Items.TryAdd("JWT", token);
+
+            _httpContextAccessor.HttpContext?.Response.Cookies.Append("accessToken", token.AccessToken, new CookieOptions
+            {
+                Expires = null,
+                HttpOnly = true,
+                IsEssential = true,
+                Secure = true,
+                SameSite = SameSiteMode.None
+            }); ;
+
         }
 
         private static bool VerifyHashPassword(string password, byte[] passwordHash, byte[] passwordSalt)

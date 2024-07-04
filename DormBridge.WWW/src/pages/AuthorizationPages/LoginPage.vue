@@ -11,17 +11,14 @@
 
         <h3 class="q-ma-none" style="color: white">DormBridge</h3>
         <div class="q-pa-md row items-start q-gutter-md">
-          <q-card
-            class="my-card inset-shadow-down shadow-10"
-            style="width: 350px; background-color: #34415f; color: white"
-          >
+          <q-card class="my-card inset-shadow-down shadow-10 asd" style="width: 350px; color: white">
             <q-card-section class="q-gutter-lg">
-              <q-input color="white" outlined v-model="text" label="Email" dark>
+              <q-input color="white" outlined v-model="login" label="Email" dark>
                 <template v-slot:prepend>
                   <q-icon name="account_circle" color="white" text-color="white" />
                 </template>
               </q-input>
-              <q-input color="white" outlined v-model="text" label="Password" dark>
+              <q-input color="white" outlined v-model="password" label="Password" dark>
                 <template v-slot:prepend>
                   <q-icon name="lock" color="white" />
                 </template>
@@ -31,7 +28,7 @@
             <q-card-actions class="flex justify-evenly">
               <q-checkbox name="accept_agreement" v-model="acceptAgreement" label="Remember password" dark />
               <div class="q-pl-xl">
-                <q-btn flat style="background: #21ba45" color="white">Sign in</q-btn>
+                <q-btn flat style="background: #21ba45" color="white" @click="loginUser">Sign in</q-btn>
               </div>
             </q-card-actions>
             <div class="q-pl-xl q-py-md q-gutter-md">
@@ -50,6 +47,28 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-const text = ref<string>('');
+import { UserService, UserSignIn } from 'src/API/UserService';
+import { useQuasar } from 'quasar';
+import { useRoute, useRouter } from 'vue-router';
+
+const $q = useQuasar();
+const router = useRouter();
+const login = ref<string>('');
+const password = ref<string>('');
 const acceptAgreement = ref<string>('');
+
+const loginUser = async () => {
+  try {
+    const data: UserSignIn = {
+      login: login.value,
+      password: password.value,
+    };
+    const response = await UserService.SignIn(data);
+    localStorage.setItem('token', 'xD');
+    $q.notify({ type: 'positive', message: response.toString() });
+    router.push('/main');
+  } catch (error: any) {
+    $q.notify({ type: 'negative', message: error.response.data });
+  }
+};
 </script>

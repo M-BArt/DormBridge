@@ -1,6 +1,8 @@
 
+using System.Reflection;
 using DormBridge.Application;
 using DormBridge.Infrastructure;
+using Microsoft.OpenApi.Models;
 
 namespace DormBridge.API
 {
@@ -13,7 +15,21 @@ namespace DormBridge.API
             builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            builder.Services.AddSwaggerGen(swagger =>
+            {
+                swagger.EnableAnnotations();
+                swagger.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "DormBridge",
+                });
+
+               
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                swagger.IncludeXmlComments(xmlPath);
+            });
+
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
             {

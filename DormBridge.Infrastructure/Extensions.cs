@@ -28,8 +28,7 @@ namespace DormBridge.Infrastructure
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-            
-            
+        
             services.AddAuthenticator(configuration);
             services.AddHttpContextAccessor();
             services.AddScoped<IUserRepository, UserRepository>();
