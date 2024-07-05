@@ -1,5 +1,8 @@
 @import 'quasar.variables';
-
+html,
+body {
+  height: 100%;
+}
 body {
   background-color: $primary;
   height: 100%;
@@ -7,6 +10,10 @@ body {
 
 .asd {
   background-color: $secondary;
+}
+
+.zxc {
+  background-color: $primary;
 }
 
 .custom-drawer {

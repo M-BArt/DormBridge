@@ -1,138 +1,203 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-    <div class="q-pa-md q-ma-md asd full-height" style="max-width: 250px; height: 100%; border-radius: 20px">
-      <h4 class="flex flex-center q-pa-none q-ma-none">DormBridge</h4>
-      <h6 class="flex flex-center q-pa-none q-ma-none">Bartosz Mroczkowski</h6>
-      <h7 class="flex flex-center q-pa-none q-ma-none">Student Account</h7>
-      <q-list padding class="rounded-borders text-primary">
-        <q-item clickable v-ripple :active="link === 'inbox'" @click="link = 'inbox'" active-class="my-menu-link">
-          <q-item-section avatar>
-            <q-icon color="white" name="inbox" />
-          </q-item-section>
-          <q-item-section style="color: white">Inbox</q-item-section>
-        </q-item>
+  <q-layout view="lhh lpR fff">
+    <q-header elevated class="text-white asd q-ma-sm">
+      <q-toolbar>
+        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+        <q-toolbar-title class="flex flex-center"> <p class="text-subtitle1 q-ma-none">Student Account</p> </q-toolbar-title>
+        <q-icon class="q-mr-sm" name="notifications_none" size="2em" />
 
-        <q-item clickable v-ripple :active="link === 'outbox'" @click="link = 'outbox'" active-class="my-menu-link">
-          <q-item-section avatar>
-            <q-icon color="white" name="send" />
-          </q-item-section>
+        <q-avatar class="q-ma-none" size="35px">
+          <img src="/icons/User.png" />
+        </q-avatar>
+      </q-toolbar>
+    </q-header>
 
-          <q-item-section style="color: white">Outbox</q-item-section>
-        </q-item>
+    <q-drawer :width="325" show-if-above v-model="leftDrawerOpen" side="left" class="asd flex justify-center items-center">
+      <q-card class="asd flex flex-center no-shadow self-start">
+        <q-card class="asd flex flex-center justify-evently no-shadow q-pa-none q-mt-md" style="width: 100%">
+          <img style="width: 65px" src="/icons/DormBridge.png" />
+          <h4 class="q-pa-none q-ma-md" style="color: white">DormBridge</h4>
+        </q-card>
+        <q-scroll-area :thumb-style="thumbStyle" :bar-style="barStyle" style="height: 70vh; width: 100%">
+          <q-card class="q-ma-none q-mt-none q-pa-sm asd flex flex-center no-shadow">
+            <q-list style="width: 100%">
+              <q-item v-for="item in menuItems" :key="item.label" style="width: 100%">
+                <q-expansion-item
+                  v-if="item.children"
+                  :label="item.label"
+                  :icon="item.icon"
+                  :style="{ color: activeItem === item.label && !activeSubItem ? '#7466F1' : '#cbcbcb', width: '100%' }"
+                  default-opened
+                >
+                  <q-list>
+                    <q-item
+                      v-for="child in item.children"
+                      :key="child.label"
+                      @click.stop="setActiveSubItem(child.label)"
+                      :class="{ 'active-sub-item': activeSubItem === child.label }"
+                      clickable
+                    >
+                      <q-item-section>
+                        {{ child.label }}
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-expansion-item>
 
-        <q-item clickable v-ripple :active="link === 'trash'" @click="link = 'trash'" active-class="my-menu-link">
-          <q-item-section avatar>
-            <q-icon color="white" name="delete" />
-          </q-item-section>
+                <q-btn
+                  v-else
+                  :style="{ color: activeItem === item.label ? '#7466F1' : '#cbcbcb', width: '100%' }"
+                  align="left"
+                  flat
+                  :label="item.label"
+                  :icon="item.icon"
+                  @click="setActive(item.label)"
+                />
+              </q-item>
+            </q-list>
+          </q-card>
+        </q-scroll-area>
+      </q-card>
 
-          <q-item-section style="color: white">Trash</q-item-section>
-        </q-item>
+      <q-card class="asd flex flex-center no-shadow self-end">
+        <p style="color: white">© 2024 DormBridge. All rights reserved.</p>
+        <p style="color: white">Designed by Bartosz Mroczkowski</p>
+      </q-card>
+    </q-drawer>
 
-        <q-separator spaced />
+    <q-page-container>
+      <q-card class="zxc flex flex-cente q-pa-none q-ma-lg no-shadow">
+        <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
+          <q-card class="q-pa-none q-ma-none flex flex-center" style="background-color: #7466f1; color: white">
+            <h6 class="q-pa-none q-ma-none">Dashboard</h6>
+          </q-card>
+        </q-card>
 
-        <q-item clickable v-ripple :active="link === 'settings'" @click="link = 'settings'" active-class="my-menu-link">
-          <q-item-section avatar>
-            <q-icon color="white" name="settings" />
-          </q-item-section>
+        <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
+          <q-card class="q-pa-none q-ma-none flex flex-center" style="background-color: #7466f1; color: white">
+            <h6 class="q-pa-none q-ma-none">View rooms</h6>
+          </q-card>
+        </q-card>
+        <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
+          <q-card class="q-pa-none q-ma-none flex flex-center" style="background-color: #7466f1; color: white">
+            <h6 class="q-pa-none q-ma-none">Room request</h6>
+          </q-card>
+        </q-card>
+        <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
+          <q-card class="q-pa-none q-ma-none flex flex-center" style="background-color: #7466f1; color: white">
+            <h6 class="q-pa-none q-ma-none">View room request</h6>
+          </q-card>
+        </q-card>
 
-          <q-item-section style="color: white">Settings</q-item-section>
-        </q-item>
+        <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
+          <q-card class="q-pa-none q-ma-none flex flex-center" style="background-color: #7466f1; color: white">
+            <h6 class="q-pa-none q-ma-none">New maintenance request</h6>
+          </q-card>
+        </q-card>
+        <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
+          <q-card class="q-pa-none q-ma-none flex flex-center" style="background-color: #7466f1; color: white">
+            <h6 class="q-pa-none q-ma-none">View maintenance request</h6>
+          </q-card>
+        </q-card>
+        <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
+          <q-card class="q-pa-none q-ma-none flex flex-center" style="background-color: #7466f1; color: white">
+            <h6 class="q-pa-none q-ma-none">View completed maintenance</h6>
+          </q-card>
+        </q-card>
 
-        <q-item clickable v-ripple :active="link === 'help'" @click="link = 'help'" active-class="my-menu-link">
-          <q-item-section avatar>
-            <q-icon color="white" name="help" />
-          </q-item-section>
+        <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
+          <q-card class="q-pa-none q-ma-none flex flex-center" style="background-color: #7466f1; color: white">
+            <h6 class="q-pa-none q-ma-none">Update profile</h6>
+          </q-card>
+        </q-card>
+        <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
+          <q-card class="q-pa-none q-ma-none flex flex-center" style="background-color: #7466f1; color: white">
+            <h6 class="q-pa-none q-ma-none">Change password</h6>
+          </q-card>
+        </q-card>
+      </q-card>
 
-          <q-item-section style="color: white">Help</q-item-section>
-        </q-item>
-      </q-list>
-    </div>
+      <router-view />
+    </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import { ref } from 'vue';
-
 export default {
-  setup() {
+  data() {
     return {
-      link: ref('inbox'),
+      thumbStyle: {
+        right: '4px',
+        borderRadius: '5px',
+        backgroundColor: '#7466F1',
+        width: '5px',
+        opacity: 0.75,
+      },
+
+      barStyle: {
+        right: '2px',
+        borderRadius: '9px',
+        backgroundColor: '#242332',
+        width: '9px',
+        opacity: 0.2,
+      },
+      activeItem: null,
+      activeSubItem: null,
+      leftDrawerOpen: true,
+      menuItems: [
+        {
+          label: 'Dashboard',
+          icon: 'space_dashboard',
+        },
+        { label: 'Room Management', icon: 'door_back', children: [{ label: 'View rooms' }, { label: 'Room request' }, { label: 'View Requests' }] },
+        {
+          label: 'Maintenance Requests',
+          icon: 'room_service',
+          children: [{ label: 'New maintenance request' }, { label: 'View requests' }, { label: 'View completed requests' }],
+        },
+        {
+          label: 'Settings',
+          icon: 'settings',
+          children: [{ label: 'Update profile' }, { label: 'Change password' }],
+        },
+        { label: 'Logout', icon: 'logout' },
+      ],
     };
+  },
+  methods: {
+    setActive(label) {
+      this.activeItem = label;
+      this.activeSubItem = null; // Reset active sub-item when a main item is clicked
+    },
+    setActiveSubItem(label) {
+      this.activeSubItem = label;
+      this.activeItem = null; // Ensure activeItem is set to 'Dashboard' when a sub-item is clicked
+    },
+    toggleLeftDrawer() {
+      this.leftDrawerOpen = !this.leftDrawerOpen;
+    },
   },
 };
 </script>
 
-<style lang="sass">
-.my-menu-link
-  color: white
-  background: #F2C037
-</style>
+<style>
+.q-btn {
+  transition: background-color 0.3s ease;
+}
 
-<style lang="sass">
-.GPLAY
+.q-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
 
-  &__toolbar
-    height: 80px
+.q-btn:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+}
 
-  &__logo
-    width: 183px
-    height: 39px
+.q-item {
+  transition: background-color 0.3s ease;
+}
 
-  &__toolbar-input-container
-    min-width: 100px
-    width: 55%
-
-  &__toolbar-input-btn
-    border-radius: 0
-    max-width: 60px
-    width: 100%
-
-  &__drawer-link
-
-    .q-item__section--avatar
-      margin: -8px 0 -8px -16px
-      padding: 8px 0 8px 16px
-
-    .q-item__section--main
-      margin: -8px -16px -8px 16px
-      padding: 8px 16px 8px 2px
-      font-size: 18px
-      font-weight: 300
-
-    &--apps, &--movies, &--music, &--books, &--devices
-      background: #34415f!important
-      &:hover
-        color: #eee !important
-
-    &--apps:hover
-      background: #43a047!important
-
-    &--movies:hover
-      background: #e53935!important
-
-    &--music:hover
-      background: #fb8c00!important
-
-    &--books:hover
-      background: #1e88e5!important
-
-    &--devices:hover
-      background: #546e7a!important
-
-  &__drawer-item
-    padding: 6px 12px 6px 23px
-
-  &__sticky
-    min-height: 49px
-    border-bottom: 1px solid rgba(0,0,0,0.12)
-
-  &__sticky-help
-    border: 1px solid #ccc
-    padding-left: 8px
-    padding-right: 8px
-
-  &__sticky-settings
-    padding-left: 17px
-    padding-right: 17px
-    border: 1px solid #ccc
+.active-sub-item {
+  color: #7466f1 !important;
+}
 </style>

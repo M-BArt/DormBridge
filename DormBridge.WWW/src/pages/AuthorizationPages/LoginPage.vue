@@ -49,7 +49,7 @@
 import { ref } from 'vue';
 import { UserService, UserSignIn } from 'src/API/UserService';
 import { useQuasar } from 'quasar';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const $q = useQuasar();
 const router = useRouter();
