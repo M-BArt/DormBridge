@@ -21,8 +21,22 @@ const routes = [
   },
 
   {
-    path: '/main',
-    component: () => import('layouts/MainLayout.vue'),
+    path: '/admin',
+    component: () => import('layouts/MainAdminLayout.vue'),
+    children: [{ path: '/asd', component: () => import('pages/IndexPage.vue') }],
+    meta: { requiresAuth: true },
+  },
+
+  {
+    path: '/personnel',
+    component: () => import('layouts/MainPersonnelLayout.vue'),
+    children: [{ path: '/asd', component: () => import('pages/IndexPage.vue') }],
+    meta: { requiresAuth: true },
+  },
+
+  {
+    path: '/user',
+    component: () => import('layouts/MainUserLayout.vue'),
     children: [{ path: '/asd', component: () => import('pages/IndexPage.vue') }],
     meta: { requiresAuth: true },
   },
