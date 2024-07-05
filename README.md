@@ -15,14 +15,68 @@
 
 <h3><b>Frontend aspects:</b></h3>
 
-<b>Authentication page</b>
+<b>Authentication Layout</b>
 
-✅ Implementation of the login panel view
+&emsp; ✅ Implementation of the login panel view
 
-✅ Implementation of the registration panel view
+&emsp; ✅ Implementation of the registration panel view
 
-✅ View for "Remind password"
+&emsp; ✅ View for "Remind password"
 
-🔳 Responsiveness of the login, regsiter panel (Excluding mobile device).
+✅ Responsiveness of the login, regsiter panel (Excluding mobile device).
 
+<b>USER/STUDENT LAYOUT</b>
 
+🔳 Toolbar / menu view
+
+🔳 Dashboard - User view
+
+Room Management view
+
+&emsp; 🔳 View rooms
+
+&emsp; 🔳 Room request
+
+&emsp; 🔳 View Request
+
+Maintenance Request view
+
+&emsp; 🔳 New maintenance request
+
+&emsp; 🔳 View request
+
+&emsp; 🔳 View completed request
+
+🔳 Settings view
+
+<b>PERSONNEL LAYOUT</b>
+
+🔳 Toolbar / menu view
+
+Room management view
+
+&emsp; 🔳 Management
+
+&emsp; 🔳 Manage room bookings page
+
+Maintenance request view
+
+&emsp; 🔳 View all request
+
+&emsp; 🔳 Maintenance history
+
+Analytics view
+
+&emsp; 🔳 Room
+
+&emsp; 🔳 Maintenance
+
+<b>ADMIN LAYOUT</b>
+
+✅ Toolbar / menu view
+
+🔳 User management view
+
+🔳 Staff management view
+
+🔳 Database view
