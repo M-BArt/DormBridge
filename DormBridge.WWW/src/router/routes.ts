@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/admin',
     component: () => import('layouts/MainAdminLayout.vue'),
-    children: [{ path: '/asd', component: () => import('pages/IndexPage.vue') }],
+    children: [{ path: '/profile', component: () => import('pages/UserPages/helpPage.vue') }],
     meta: { requiresAuth: true },
   },
 

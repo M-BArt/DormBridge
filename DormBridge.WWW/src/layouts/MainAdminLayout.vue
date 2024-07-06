@@ -5,7 +5,7 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
         <q-icon class="q-mr-sm" name="help_outline" size="2em" />
         <q-toolbar-title class="flex flex-center"> <p class="text-subtitle1 q-ma-none">Admin Account</p> </q-toolbar-title>
-        <q-icon class="q-mr-sm" name="help_outline" size="2em" />
+        <q-icon @click="goToHelp" class="q-mr-sm" name="help_outline" size="2em" />
         <q-icon class="q-mr-sm" name="notifications_none" size="2em" />
         <q-avatar class="q-ma-none" size="35px">
           <img src="/icons/User.png" />
@@ -23,7 +23,7 @@
         <q-scroll-area :thumb-style="thumbStyle" :bar-style="barStyle" style="height: 70vh; width: 100%">
           <q-card class="q-ma-none q-mt-none q-pa-sm asd flex flex-center no-shadow">
             <q-list style="width: 100%">
-              <q-item v-for="item in menuItems" :key="item.label" style="width: 100%">
+              <q-item clickable @click="goToPage(item.url)" v-for="item in menuItems" :key="item.label" style="width: 100%">
                 <q-expansion-item
                   v-if="item.children"
                   :label="item.label"
@@ -74,7 +74,7 @@
         <q-scroll-area :thumb-style="thumbStyle" :bar-style="barStyle" style="height: 70vh; width: 100%">
           <q-card class="q-ma-none q-mt-none q-pa-sm asd flex flex-center no-shadow">
             <q-list style="width: 100%">
-              <q-item v-for="item in personnelMenuItems" :key="item.label" style="width: 100%">
+              <q-item clickable @click="goToPage(item.url)" v-for="item in personnelMenuItems" :key="item.label" style="width: 100%">
                 <q-expansion-item
                   v-if="item.children"
                   :label="item.label"
@@ -112,102 +112,7 @@
       </q-card>
     </q-drawer>
 
-    <q-page-container class="q-mt- q-pa-none">
-      <q-card class="zxc flex flex-cente q-pa-none q-ma-md no-shadow">
-        <q-scroll-area :thumb-style="thumbStyle" :bar-style="barStyle" style="height: 90vh; width: 100%">
-          <q-card class="zxc flex flex-cente q-pa-none q-ma-none no-shadow">
-            <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
-              <q-card class="q-pa-none q-ma-none flex flex-center" style="height: 30%; width: 100%; background-color: #7466f1; color: white">
-                <q-icon class="q-mr-sm" name="space_dashboard" size="2em" />
-                <h7 class="q-pa-none q-ma-none">Dashboard</h7>
-              </q-card>
-              <q-card class="q-pa-sm q-ma-none flex flex-center" style="height: 70%; width: 100%; background-color: #2b2d41; color: white">
-                <p>The main page where you can see an overview of all important information and notifications.</p>
-              </q-card>
-            </q-card>
-
-            <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
-              <q-card class="q-pa-none q-ma-none flex flex-center" style="height: 30%; width: 100%; background-color: #7466f1; color: white">
-                <q-icon class="q-mr-sm" name="door_back" size="2em" />
-                <h7 class="q-pa-none q-ma-none">View rooms</h7>
-              </q-card>
-              <q-card class="q-pa-sm q-ma-none flex flex-center" style="height: 70%; width: 100%; background-color: #2b2d41; color: white">
-                <p>Browse available rooms to see detailed information about each one. Find the room that best suits your needs.</p>
-              </q-card>
-            </q-card>
-
-            <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
-              <q-card class="q-pa-none q-ma-none flex flex-center" style="height: 30%; width: 100%; background-color: #7466f1; color: white">
-                <q-icon class="q-mr-sm" name="door_back" size="2em" />
-                <h7 class="q-pa-none q-ma-none">Room request</h7>
-              </q-card>
-              <q-card class="q-pa-sm q-ma-none flex flex-center" style="height: 70%; width: 100%; background-color: #2b2d41; color: white">
-                <p>Submit requests to reserve rooms for selected dates. Fill out the form to book the appropriate space for your event.</p>
-              </q-card>
-            </q-card>
-
-            <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
-              <q-card class="q-pa-none q-ma-none flex flex-center" style="height: 30%; width: 100%; background-color: #7466f1; color: white">
-                <q-icon class="q-mr-sm" name="door_back" size="2em" />
-                <h7 class="q-pa-none q-ma-none">View room request</h7>
-              </q-card>
-              <q-card class="q-pa-sm q-ma-none flex flex-center" style="height: 70%; width: 100%; background-color: #2b2d41; color: white">
-                <p>Review your room reservation requests. Check the status of your submissions.</p>
-              </q-card>
-            </q-card>
-
-            <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
-              <q-card class="q-pa-none q-ma-none flex flex-center" style="height: 30%; width: 100%; background-color: #7466f1; color: white">
-                <q-icon class="q-mr-sm" name="room_service" size="2em" />
-                <h7 class="q-pa-none q-ma-none">New maintenance request</h7>
-              </q-card>
-              <q-card class="q-pa-sm q-ma-none flex flex-center" style="height: 70%; width: 100%; background-color: #2b2d41; color: white">
-                <p>Submit new requests for maintenance or repairs. Describe the issue and send the request to receive technical assistance.</p>
-              </q-card>
-            </q-card>
-
-            <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
-              <q-card class="q-pa-none q-ma-none flex flex-center" style="height: 30%; width: 100%; background-color: #7466f1; color: white">
-                <q-icon class="q-mr-sm" name="room_service" size="2em" />
-                <h7 class="q-pa-none q-ma-none">View maintenance request</h7>
-              </q-card>
-              <q-card class="q-pa-sm q-ma-none flex flex-center" style="height: 70%; width: 100%; background-color: #2b2d41; color: white">
-                <p>Browse current and maintenance requests. Monitor the status of your submissions.</p>
-              </q-card>
-            </q-card>
-
-            <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
-              <q-card class="q-pa-none q-ma-none flex flex-center" style="height: 30%; width: 100%; background-color: #7466f1; color: white">
-                <q-icon class="q-mr-sm" name="room_service" size="2em" />
-                <h7 class="q-pa-none q-ma-none">View completed maintenance</h7>
-              </q-card>
-              <q-card class="q-pa-sm q-ma-none flex flex-center" style="height: 70%; width: 100%; background-color: #2b2d41; color: white">
-                <p>View a list of completed maintenance tasks. Check what repairs have been done and when they were completed.</p>
-              </q-card>
-            </q-card>
-
-            <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
-              <q-card class="q-pa-none q-ma-none flex flex-center" style="height: 30%; width: 100%; background-color: #7466f1; color: white">
-                <q-icon class="q-mr-sm" name="settings" size="2em" />
-                <h7 class="q-pa-none q-ma-none">Update profile</h7>
-              </q-card>
-              <q-card class="q-pa-sm q-ma-none flex flex-center" style="height: 70%; width: 100%; background-color: #2b2d41; color: white">
-                <p>Update your personal information and user preferences. Ensure your profile is always up to date.</p>
-              </q-card>
-            </q-card>
-
-            <q-card style="border-end-end-radius: 15px; height: 115px; width: 300px" class="q-ma-md q-mt-none asd">
-              <q-card class="q-pa-none q-ma-none flex flex-center" style="height: 30%; width: 100%; background-color: #7466f1; color: white">
-                <q-icon class="q-mr-sm" name="settings" size="2em" />
-                <h8 class="q-pa-none q-ma-none">Change password</h8>
-              </q-card>
-              <q-card class="q-pa-sm q-ma-none flex flex-center" style="height: 70%; width: 100%; background-color: #2b2d41; color: white">
-                <p>Update your account password to ensure your security.</p>
-              </q-card>
-            </q-card>
-          </q-card>
-        </q-scroll-area>
-      </q-card>
+    <q-page-container class="q-ma-none q-pa-none">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -240,6 +145,7 @@ export default {
         {
           label: 'Dashboard',
           icon: 'space_dashboard',
+          url: '/profile',
         },
         { label: 'Room Management', icon: 'door_back', children: [{ label: 'View rooms' }, { label: 'Room request' }, { label: 'View Requests' }] },
         {
@@ -283,6 +189,14 @@ export default {
     };
   },
   methods: {
+    goToHelp() {
+      this.$router.push('/login');
+    },
+    goToPage(url) {
+      if (url) {
+        this.$router.push(url);
+      }
+    },
     setActive(label) {
       this.activeItem = label;
       this.activeSubItem = null;
