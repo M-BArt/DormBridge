@@ -21,42 +21,7 @@
           <h4 class="q-pa-none q-ma-md" style="color: white">DormBridge</h4>
         </q-card>
         <q-scroll-area :thumb-style="thumbStyle" :bar-style="barStyle" style="height: 70vh; width: 100%">
-          <q-card class="q-ma-none q-mt-none q-pa-sm asd flex flex-center no-shadow">
-            <q-list style="width: 100%">
-              <q-item clickable @click="goToPage(item.url)" v-for="item in menuItems" :key="item.label" style="width: 100%">
-                <q-expansion-item
-                  v-if="item.children"
-                  :label="item.label"
-                  :icon="item.icon"
-                  :style="{ color: activeItem === item.label && !activeSubItem ? '#7466F1' : '#cbcbcb', width: '100%' }"
-                >
-                  <q-list>
-                    <q-item
-                      v-for="child in item.children"
-                      :key="child.label"
-                      @click.stop="setActiveSubItem(child.label)"
-                      :class="{ 'active-sub-item': activeSubItem === child.label }"
-                      clickable
-                    >
-                      <q-item-section>
-                        {{ child.label }}
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-expansion-item>
-
-                <q-btn
-                  v-else
-                  :style="{ color: activeItem === item.label ? '#7466F1' : '#cbcbcb', width: '100%' }"
-                  align="left"
-                  flat
-                  :label="item.label"
-                  :icon="item.icon"
-                  @click="setActive(item.label)"
-                />
-              </q-item>
-            </q-list>
-          </q-card>
+          <MenuPanel :menuItems="menuItems" />
         </q-scroll-area>
       </q-card>
 
@@ -72,42 +37,7 @@
           <h4 class="q-pa-none q-ma-md" style="color: white">Personnel Panel</h4>
         </q-card>
         <q-scroll-area :thumb-style="thumbStyle" :bar-style="barStyle" style="height: 70vh; width: 100%">
-          <q-card class="q-ma-none q-mt-none q-pa-sm asd flex flex-center no-shadow">
-            <q-list style="width: 100%">
-              <q-item clickable @click="goToPage(item.url)" v-for="item in personnelMenuItems" :key="item.label" style="width: 100%">
-                <q-expansion-item
-                  v-if="item.children"
-                  :label="item.label"
-                  :icon="item.icon"
-                  :style="{ color: activeItem === item.label && !activeSubItem ? '#7466F1' : '#cbcbcb', width: '100%' }"
-                >
-                  <q-list>
-                    <q-item
-                      v-for="child in item.children"
-                      :key="child.label"
-                      @click.stop="setActiveSubItem(child.label)"
-                      :class="{ 'active-sub-item': activeSubItem === child.label }"
-                      clickable
-                    >
-                      <q-item-section>
-                        {{ child.label }}
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-expansion-item>
-
-                <q-btn
-                  v-else
-                  :style="{ color: activeItem === item.label ? '#7466F1' : '#cbcbcb', width: '100%' }"
-                  align="left"
-                  flat
-                  :label="item.label"
-                  :icon="item.icon"
-                  @click="setActive(item.label)"
-                />
-              </q-item>
-            </q-list>
-          </q-card>
+          <MenuPanel :menuItems="personnelMenuItems" />
         </q-scroll-area>
       </q-card>
     </q-drawer>
@@ -118,121 +48,129 @@
   </q-layout>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      thumbStyle: {
-        right: '4px',
-        borderRadius: '5px',
-        backgroundColor: '#7466F1',
-        width: '5px',
-        opacity: 0.75,
-      },
+<script setup lang="ts">
+import MenuPanel from 'src/components/MenuPanel.vue';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-      barStyle: {
-        right: '2px',
-        borderRadius: '9px',
-        backgroundColor: '#242332',
-        width: '9px',
-        opacity: 0.2,
-      },
-      activeItem: null,
-      activeSubItem: null,
-      leftDrawerOpen: true,
-      rightDrawerOpen: true,
-      menuItems: [
-        {
-          label: 'Dashboard',
-          icon: 'space_dashboard',
-          url: '/profile',
-        },
-        { label: 'Room Management', icon: 'door_back', children: [{ label: 'View rooms' }, { label: 'Room request' }, { label: 'View Requests' }] },
-        {
-          label: 'Maintenance Requests',
-          icon: 'room_service',
-          children: [{ label: 'New maintenance request' }, { label: 'View requests' }, { label: 'View completed requests' }],
-        },
-        {
-          label: 'Settings',
-          icon: 'settings',
-          children: [{ label: 'Update profile' }, { label: 'Change password' }],
-        },
-        { label: 'Logout', icon: 'logout' },
-      ],
-      personnelMenuItems: [
-        {
-          label: 'Room Management',
-          icon: 'door_back',
-          children: [{ label: 'Management' }, { label: 'Manage room bookings' }],
-        },
-        {
-          label: 'Maintenance Management',
-          icon: 'room_service',
-          children: [{ label: 'View All Requests' }, { label: 'Maintenance history' }],
-        },
-        {
-          label: 'Analytics',
-          icon: 'assessment',
-          children: [{ label: 'Room' }, { label: 'Maintenance' }],
-        },
-        {
-          label: 'User Management',
-          icon: 'manage_accounts',
-        },
-        {
-          label: 'Staff Management',
-          icon: 'engineering',
-        },
-        { label: 'Database', icon: 'storage' },
-      ],
-    };
+const leftDrawerOpen = ref<boolean>(true);
+const rightDrawerOpen = ref<boolean>(true);
+const router = useRouter();
+
+interface ChildItem {
+  label: string;
+  url?: string;
+}
+
+interface MenuItem {
+  label: string;
+  icon: string;
+  url?: string;
+  children?: ChildItem[];
+}
+
+const menuItems = ref<MenuItem[]>([
+  {
+    label: 'Dashboard',
+    icon: 'space_dashboard',
+    url: '/profile',
   },
-  methods: {
-    goToHelp() {
-      this.$router.push('/login');
-    },
-    goToPage(url) {
-      if (url) {
-        this.$router.push(url);
-      }
-    },
-    setActive(label) {
-      this.activeItem = label;
-      this.activeSubItem = null;
-    },
-    setActiveSubItem(label) {
-      this.activeSubItem = label;
-      this.activeItem = null;
-    },
-    toggleLeftDrawer() {
-      this.leftDrawerOpen = !this.leftDrawerOpen;
-    },
-    toggleRightDrawer() {
-      this.rightDrawerOpen = !this.rightDrawerOpen;
-    },
+  {
+    label: 'Room Management',
+    icon: 'door_back',
+    children: [
+      { label: 'View rooms', url: '/view-rooms' },
+      { label: 'Room request', url: '/room-request' },
+      { label: 'View Requests', url: '/view-requests' },
+    ],
   },
+  {
+    label: 'Maintenance Requests',
+    icon: 'room_service',
+    children: [
+      { label: 'New maintenance request', url: '/new-maintenance-request' },
+      { label: 'View requests', url: '/view-requests' },
+      { label: 'View completed requests', url: '/view-completed-requests' },
+    ],
+  },
+  {
+    label: 'Settings',
+    icon: 'settings',
+    children: [
+      { label: 'Update profile', url: '/update-profile' },
+      { label: 'Change password', url: '/change-password' },
+    ],
+  },
+  { label: 'Logout', icon: 'logout', url: '/logout' },
+]);
+
+const personnelMenuItems = ref<MenuItem[]>([
+  {
+    label: 'Room Management',
+    icon: 'door_back',
+    children: [
+      { label: 'Management', url: '/management' },
+      { label: 'Manage room bookings', url: '/manage-room-bookings' },
+    ],
+  },
+  {
+    label: 'Maintenance Management',
+    icon: 'room_service',
+    children: [
+      { label: 'View All Requests', url: '/view-all-requests' },
+      { label: 'Maintenance history', url: '/maintenance-history' },
+    ],
+  },
+  {
+    label: 'Analytics',
+    icon: 'assessment',
+    children: [
+      { label: 'Room', url: '/analytics-room' },
+      { label: 'Maintenance', url: '/analytics-maintenance' },
+    ],
+  },
+  {
+    label: 'User Management',
+    icon: 'manage_accounts',
+    url: '/user-management',
+  },
+  {
+    label: 'Staff Management',
+    icon: 'engineering',
+    url: '/staff-management',
+  },
+  {
+    label: 'Database',
+    icon: 'storage',
+    url: '/database',
+  },
+]);
+
+const thumbStyle = ref({
+  right: '4px',
+  borderRadius: '5px',
+  backgroundColor: '#7466F1',
+  width: '5px',
+  opacity: '0.75',
+});
+
+const barStyle = ref({
+  right: '2px',
+  borderRadius: '9px',
+  backgroundColor: '#242332',
+  width: '9px',
+  opacity: '0.2',
+});
+
+const goToHelp = () => {
+  router.push('/login');
+};
+
+const toggleLeftDrawer = () => {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+};
+
+const toggleRightDrawer = () => {
+  rightDrawerOpen.value = !rightDrawerOpen.value;
 };
 </script>
-
-<style>
-.q-btn {
-  transition: background-color 0.3s ease;
-}
-
-.q-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.q-btn:focus {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.q-item {
-  transition: background-color 0.3s ease;
-}
-
-.active-sub-item {
-  color: #7466f1 !important;
-}
-</style>

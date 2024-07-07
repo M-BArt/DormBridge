@@ -1,7 +1,6 @@
 <template>
   <div>
     <HelpCards :helpCards="helpCards" />
-    <!-- Reszta zawartości strony -->
   </div>
 </template>
 

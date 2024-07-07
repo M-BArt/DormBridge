@@ -37,15 +37,17 @@ defineProps<{
 const thumbStyle = ref({
   right: '4px',
   borderRadius: '5px',
-  backgroundColor: 'rgba(0,0,0,0.5)',
+  backgroundColor: '#7466F1',
   width: '5px',
+  opacity: '0.75',
 });
 
 const barStyle = ref({
   right: '2px',
   borderRadius: '9px',
-  backgroundColor: 'rgba(0,0,0,0.2)',
+  backgroundColor: '#242332',
   width: '9px',
+  opacity: '0.2',
 });
 </script>
 
