@@ -27,7 +27,7 @@
 
 <b>USER/STUDENT LAYOUT</b>
 
-🔳 Toolbar / menu view
+✅ Toolbar / menu view
 
 🔳 Dashboard - User view
 
@@ -51,7 +51,7 @@ Maintenance Request view
 
 <b>PERSONNEL LAYOUT</b>
 
-🔳 Toolbar / menu view
+✅ Toolbar / menu view
 
 Room management view
 
