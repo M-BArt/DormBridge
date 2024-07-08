@@ -44,14 +44,14 @@ module.exports = configure(function (/* ctx */) {
         node: 'node20',
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '/',
+      publicPath: 'DormBridge/WWW',
       // analyze: true,
       // env: {},
       // rawDefine: {}
@@ -81,8 +81,9 @@ module.exports = configure(function (/* ctx */) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
-      // https: true
-      open: true, // opens browser window automatically
+      http: false,
+      port: 8081,
+      open: true,
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework

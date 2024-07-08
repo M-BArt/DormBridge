@@ -10,11 +10,13 @@
         >
           <q-list>
             <q-item
+              @click="goToPage(child.url)"
               v-for="child in item.children"
               :key="child.label"
               @click.stop="setActiveSubItem(child.label)"
               :class="{ 'active-sub-item': activeSubItem === child.label }"
               clickable
+              :style="{ color: activeSubItem === child.label && !activeItem ? '#7466F1' : '#cbcbcb', width: '100%' }"
             >
               <q-item-section>
                 {{ child.label }}

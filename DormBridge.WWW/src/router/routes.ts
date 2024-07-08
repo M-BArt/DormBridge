@@ -24,8 +24,26 @@ const routes = [
     path: '/admin',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '/helpUser', component: () => import('pages/UserPages/helpUserPage.vue') },
-      { path: '/helpPersonnel', component: () => import('pages/PersonnelPages/helpPersonnelPage.vue') },
+      // Dashboard
+      { path: '/dashboard', component: () => import('pages/UserPages/dashboardPage.vue') },
+
+      // Help page
+      { path: '/help-user', component: () => import('pages/UserPages/helpUserPage.vue') },
+      { path: '/help-personnel', component: () => import('pages/PersonnelPages/helpPersonnelPage.vue') },
+
+      // Room management
+      { path: '/view-rooms', component: () => import('pages/UserPages/Room Management/viewRoomsPage.vue') },
+      { path: '/room-request', component: () => import('pages/UserPages/Room Management/roomRequestPage.vue') },
+      { path: '/view-requests-room', component: () => import('pages/UserPages/Room Management/viewRequestsPage.vue') },
+
+      // Maintenance requests
+      { path: '/new-maintenance-request', component: () => import('pages/UserPages/Maintenance Requests/newMaintenanceRequestPage.vue') },
+      { path: '/view-requests-maintenance', component: () => import('pages/UserPages/Maintenance Requests/viewRequestsPage.vue') },
+      { path: '/view-completed-requests', component: () => import('pages/UserPages/Maintenance Requests/viewCompleteRequestsPage.vue') },
+
+      // Settings
+      { path: '/update-profile', component: () => import('pages/UserPages/Settings/updateProfilePage.vue') },
+      { path: '/change-password', component: () => import('pages/UserPages/Settings/changePasswordPage.vue') },
     ],
     meta: { requiresAuth: true },
   },

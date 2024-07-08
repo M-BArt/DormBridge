@@ -66,7 +66,11 @@
     </q-drawer>
 
     <q-page-container class="q-ma-none q-pa-none">
-      <router-view />
+      <q-card class="zxc flex flex-center q-pa-none q-ma-sm q-mt-md no-shadow">
+        <q-scroll-area :thumb-style="thumbStyle" :bar-style="barStyle" style="height: 90vh; width: 100%">
+          <router-view />
+        </q-scroll-area>
+      </q-card>
     </q-page-container>
   </q-layout>
 </template>
@@ -102,7 +106,7 @@ const menuItems = ref<MenuItem[]>([
   {
     label: 'Dashboard',
     icon: 'space_dashboard',
-    url: '/profile',
+    url: '/dashboard',
   },
   {
     label: 'Room Management',
@@ -110,7 +114,7 @@ const menuItems = ref<MenuItem[]>([
     children: [
       { label: 'View rooms', url: '/view-rooms' },
       { label: 'Room request', url: '/room-request' },
-      { label: 'View Requests', url: '/view-requests' },
+      { label: 'View Requests', url: '/view-requests-room' },
     ],
   },
   {
@@ -118,7 +122,7 @@ const menuItems = ref<MenuItem[]>([
     icon: 'room_service',
     children: [
       { label: 'New maintenance request', url: '/new-maintenance-request' },
-      { label: 'View requests', url: '/view-requests' },
+      { label: 'View requests', url: '/view-requests-maintenance' },
       { label: 'View completed requests', url: '/view-completed-requests' },
     ],
   },
@@ -192,11 +196,11 @@ const barStyle = ref({
 });
 
 const goToUserHelp = () => {
-  router.push('/helpUser');
+  router.push('/help-user');
 };
 
 const goToPersonnelHelp = () => {
-  router.push('/helpPersonnel');
+  router.push('/help-personnel');
 };
 
 const toggleLeftDrawer = () => {
