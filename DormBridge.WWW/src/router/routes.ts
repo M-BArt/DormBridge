@@ -22,22 +22,11 @@ const routes = [
 
   {
     path: '/admin',
-    component: () => import('layouts/MainAdminLayout.vue'),
-    children: [{ path: '/profile', component: () => import('pages/UserPages/helpPage.vue') }],
-    meta: { requiresAuth: true },
-  },
-
-  {
-    path: '/personnel',
-    component: () => import('layouts/MainPersonnelLayout.vue'),
-    children: [{ path: '/asd', component: () => import('pages/IndexPage.vue') }],
-    meta: { requiresAuth: true },
-  },
-
-  {
-    path: '/user',
-    component: () => import('layouts/MainUserLayout.vue'),
-    children: [{ path: '/asd', component: () => import('pages/IndexPage.vue') }],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '/helpUser', component: () => import('pages/UserPages/helpUserPage.vue') },
+      { path: '/helpPersonnel', component: () => import('pages/PersonnelPages/helpPersonnelPage.vue') },
+    ],
     meta: { requiresAuth: true },
   },
 

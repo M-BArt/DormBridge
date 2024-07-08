@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HelpCards :helpCards="helpCards" />
+    <HelpCards :helpCards="helpUserCards" />
   </div>
 </template>
 
@@ -14,7 +14,7 @@ interface HelpCard {
   description: string;
 }
 
-const helpCards = ref<HelpCard[]>([
+const helpUserCards = ref<HelpCard[]>([
   {
     title: 'Dashboard',
     icon: 'space_dashboard',

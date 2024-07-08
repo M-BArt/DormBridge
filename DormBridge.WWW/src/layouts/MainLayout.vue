@@ -3,18 +3,22 @@
     <q-header elevated class="text-white asd q-ma-sm">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-        <q-icon class="q-mr-sm" name="help_outline" size="2em" />
-        <q-toolbar-title class="flex flex-center"> <p class="text-subtitle1 q-ma-none">Admin Account</p> </q-toolbar-title>
-        <q-icon @click="goToHelp" class="q-mr-sm" name="help_outline" size="2em" />
+        <q-icon v-if="isAdmin || isUser" @click="goToUserHelp" class="q-mr-sm" name="help_outline" size="2em" />
+        <q-icon v-if="isPersonnel" @click="goToPersonnelHelp" class="q-mr-sm" name="help_outline" size="2em" />
+        <q-toolbar-title class="flex flex-center">
+          <p class="text-subtitle1 q-ma-none">{{ userRole }} Account</p>
+        </q-toolbar-title>
+        <q-icon v-if="isAdmin" @click="goToPersonnelHelp" class="q-mr-sm" name="help_outline" size="2em" />
         <q-icon class="q-mr-sm" name="notifications_none" size="2em" />
         <q-avatar class="q-ma-none" size="35px">
           <img src="/icons/User.png" />
         </q-avatar>
-        <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+        <q-btn v-if="isAdmin" dense flat round icon="menu" @click="toggleRightDrawer" />
       </q-toolbar>
     </q-header>
 
-    <q-drawer :width="325" show-if-above v-model="leftDrawerOpen" side="left" class="asd flex justify-center items-center">
+    <!-- Left Drawer for Users and Admin -->
+    <q-drawer :width="325" show-if-above v-model="leftDrawerOpen" side="left" class="asd flex justify-center items-center" v-if="isUser || isAdmin">
       <q-card class="asd flex flex-center no-shadow self-start">
         <q-card class="asd flex flex-center justify-evently no-shadow q-pa-none q-mt-md" style="width: 100%">
           <img style="width: 65px" src="/icons/DormBridge.png" />
@@ -31,7 +35,26 @@
       </q-card>
     </q-drawer>
 
-    <q-drawer :width="325" show-if-above v-model="rightDrawerOpen" side="right" class="asd flex justify-center items-center">
+    <!-- Left Drawer for Personnel -->
+    <q-drawer :width="325" show-if-above v-model="leftDrawerOpen" side="left" class="asd flex justify-center items-center" v-if="isPersonnel">
+      <q-card class="asd flex flex-center no-shadow self-start">
+        <q-card class="asd flex flex-center justify-evently no-shadow q-pa-none q-mt-md" style="width: 100%">
+          <img style="width: 65px" src="/icons/DormBridge.png" />
+          <h4 class="q-pa-none q-ma-md" style="color: white">DormBridge</h4>
+        </q-card>
+        <q-scroll-area :thumb-style="thumbStyle" :bar-style="barStyle" style="height: 70vh; width: 100%">
+          <MenuPanel :menuItems="personnelMenuItems" />
+        </q-scroll-area>
+      </q-card>
+
+      <q-card class="asd flex flex-center no-shadow self-end">
+        <p style="color: white">© 2024 DormBridge. All rights reserved.</p>
+        <p style="color: white">Designed by Bartosz Mroczkowski</p>
+      </q-card>
+    </q-drawer>
+
+    <!-- Right Drawer for Admin -->
+    <q-drawer :width="325" show-if-above v-model="rightDrawerOpen" side="right" class="asd flex justify-center items-center" v-if="isAdmin">
       <q-card class="asd flex flex-center no-shadow self-start">
         <q-card class="asd flex flex-center justify-evently no-shadow q-pa-none q-mt-md" style="width: 100%">
           <h4 class="q-pa-none q-ma-md" style="color: white">Personnel Panel</h4>
@@ -50,12 +73,18 @@
 
 <script setup lang="ts">
 import MenuPanel from 'src/components/MenuPanel.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const leftDrawerOpen = ref<boolean>(true);
 const rightDrawerOpen = ref<boolean>(true);
 const router = useRouter();
+
+const userRole = ref<string>('Admin');
+
+const isUser = computed(() => userRole.value === 'User');
+const isPersonnel = computed(() => userRole.value === 'Personnel');
+const isAdmin = computed(() => userRole.value === 'Admin');
 
 interface ChildItem {
   label: string;
@@ -162,8 +191,12 @@ const barStyle = ref({
   opacity: '0.2',
 });
 
-const goToHelp = () => {
-  router.push('/login');
+const goToUserHelp = () => {
+  router.push('/helpUser');
+};
+
+const goToPersonnelHelp = () => {
+  router.push('/helpPersonnel');
 };
 
 const toggleLeftDrawer = () => {
