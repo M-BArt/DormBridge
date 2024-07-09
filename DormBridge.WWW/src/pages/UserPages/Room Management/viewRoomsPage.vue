@@ -45,9 +45,9 @@
       </template>
     </q-table>
   </div>
-  <q-card class="row zxc q-pa-none q-ma-md no-shadow flex flex-center">
-    <q-card dark class="zxc flex justify-start q-ma-md q-pa-none no-shadow column" style="width: 32%; border: 1px solid #7466f1">
-      <q-card dark class="flex flex-center" style="background-color: #7466f1">Filtrs</q-card>
+  <q-card class="row zxc q-pa-none q-ma-md no-shadow flex justify-between">
+    <q-card dark class="col-xs-4 col-xl-3 asd flex justify-start q-ml-none q-pa-none no-shadow column" style="border: 1px solid #7466f1">
+      <q-card dark class="flex flex-center" style="background-color: #7466f1; height: 25px">Filtrs</q-card>
       <q-select class="q-ma-sm" dark color="white" v-model="model" :options="options" label="Dormitory">
         <template v-if="model" v-slot:append>
           <q-icon name="cancel" @click.stop.prevent="model = null" class="cursor-pointer" />
@@ -95,141 +95,19 @@
 
       <q-btn class="q-ma-sm" style="background: #7466f1; color: white" label="Reset" />
     </q-card>
-    <q-card dark class="flex justify-start q-ma-md q-pa-none no-shadow row" style="width: 60%; border: 2px solid #7466f1">
-      <q-card dark class="flex flex-center column" style="background-color: #7466f1; width: 100%">Details</q-card>
 
-      <q-card class="zxc q-pa-sm" style="width: 50%; border: 2px solid #7466f1">
-        <q-list bordered padding class="rounded-borders" style="max-width: 350px">
-          <q-item-label header class="q-pa-none" style="color: #7466f1; font-size: 18px">Basic Information</q-item-label>
-          <q-item class="q-pa-sm">
-            <q-item-section>Dormitory:</q-item-section>
-
-            <q-item-section side>
-              <q-item-label style="color: white">Value</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item class="q-pa-sm">
-            <q-item-section>Room area:</q-item-section>
-
-            <q-item-section side>
-              <q-item-label style="color: white">Value</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item class="q-pa-sm">
-            <q-item-section>Room type:</q-item-section>
-
-            <q-item-section side>
-              <q-item-label style="color: white">Value</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item class="q-pa-sm">
-            <q-item-section>Number of residents:</q-item-section>
-
-            <q-item-section side>
-              <q-item-label style="color: white">Value</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item class="q-pa-sm">
-            <q-item-section>Number of available places:</q-item-section>
-
-            <q-item-section side>
-              <q-item-label style="color: white">Value</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item class="q-pa-sm">
-            <q-item-section>Cost:</q-item-section>
-
-            <q-item-section side>
-              <q-item-label style="color: white">Value</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-card>
-
-      <q-card class="zxc q-pa-sm" style="width: 50%; border: 2px solid #7466f1">
-        <q-list bordered padding class="rounded-borders" style="max-width: 350px">
-          <q-item-label header class="q-pa-none" style="color: #7466f1; font-size: 18px">Equipment</q-item-label>
-
-          <q-item class="q-pa-sm">
-            <q-item-section>Refrigerator:</q-item-section>
-
-            <q-item-section side>
-              <q-item-label style="color: white">Value</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item class="q-pa-sm">
-            <q-item-section>Microwave:</q-item-section>
-
-            <q-item-section side>
-              <q-item-label style="color: white">Value</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item class="q-pa-sm">
-            <q-item-section>Internet access:</q-item-section>
-
-            <q-item-section side>
-              <q-item-label style="color: white">Value</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item class="q-pa-sm">
-            <q-item-section>Air conditioning:</q-item-section>
-
-            <q-item-section side>
-              <q-item-label style="color: white">Value</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item class="q-pa-sm">
-            <q-item-section>Heating:</q-item-section>
-
-            <q-item-section side>
-              <q-item-label style="color: white">Value</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item class="q-pa-sm">
-            <q-item-section>Bathroom:</q-item-section>
-
-            <q-item-section side>
-              <q-item-label style="color: white">Value</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-card>
-      <q-card class="zxc q-pa-sm" style="width: 100%; border: 2px solid #7466f1">
-        <q-list bordered padding class="rounded-borders" style="max-width: 350px">
-          <q-item-label header class="q-pa-none" style="color: #7466f1; font-size: 18px">Other information</q-item-label>
-          <q-item class="q-pa-sm">
-            <q-item-section>Room number:</q-item-section>
-
-            <q-item-section side>
-              <q-item-label style="color: white">Value</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item class="q-pa-sm">
-            <q-item-section>Floor:</q-item-section>
-
-            <q-item-section side>
-              <q-item-label style="color: white">Value</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-card>
+    <q-card dark class="col-7 flex justify-start q-ma-none q-pa-none no-shadow row" style="border: 2px solid #7466f1">
+      <q-card dark class="flex flex-center q-pa-none q-ma-none" style="background-color: #7466f1; width: 100%; height: 25px">Filtrs</q-card>
+      <Information header="Basic information" :information="basicInformation" cardWidth="50%" />
+      <Information header="Equipment" :information="equipmentInformation" cardWidth="50%" />
+      <Information header="Other information" :information="otherInformation" cardWidth="100%" />
     </q-card>
   </q-card>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import Information from 'components/InformationPanel.vue';
 
 interface TableColumn {
   name: string;
@@ -241,7 +119,6 @@ interface TableColumn {
   sort?: (a: any, b: any, rowA: any, rowB: any) => number;
   format?: (val: string | number) => string;
 }
-
 interface RowData {
   name: string;
   calories: number;
@@ -407,6 +284,76 @@ const rows = ref<RowData[]>([
     sodium: 54,
     calcium: '12%',
     iron: '6%',
+  },
+]);
+
+interface Information {
+  label: string;
+  value: string;
+}
+
+const basicInformation = ref<Information[]>([
+  {
+    label: 'Dormitory',
+    value: 'Value',
+  },
+  {
+    label: 'Room area',
+    value: 'Value',
+  },
+  {
+    label: 'Room type',
+    value: 'Value',
+  },
+  {
+    label: 'Number of residents',
+    value: 'Value',
+  },
+  {
+    label: 'Number of available places',
+    value: 'Value',
+  },
+  {
+    label: 'Cost',
+    value: 'Value',
+  },
+]);
+
+const equipmentInformation = ref<Information[]>([
+  {
+    label: 'Refrigerator',
+    value: 'Value',
+  },
+  {
+    label: 'Microwave',
+    value: 'Value',
+  },
+  {
+    label: 'Internet access',
+    value: 'Value',
+  },
+  {
+    label: 'Air conditioning',
+    value: 'Value',
+  },
+  {
+    label: 'Heating',
+    value: 'Value',
+  },
+  {
+    label: 'Bathroom',
+    value: 'Value',
+  },
+]);
+
+const otherInformation = ref<Information[]>([
+  {
+    label: 'Room number',
+    value: 'Value',
+  },
+  {
+    label: 'Floor',
+    value: 'Value',
   },
 ]);
 </script>
