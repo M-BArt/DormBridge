@@ -1,18 +1,23 @@
-﻿namespace DormBridge.Domain.Entities
-{
-    public class Room
-    {
-        public Guid RoomGuid { get; set; }
+﻿using DormBridge.Domain.ValueObjects.Room;
 
+namespace DormBridge.Domain.Entities
+{
+    public sealed class Room
+    {
+        public int Id { get; set; }
+        public float RoomArea { get; set; }
+        public RoomType RoomType { get; set; } = null!;
+        public int RoomNumber { get; set; }
         public int Capacity { get; set; }
         public int Occupied { get; set; }
-
-        public bool HasBathroom { get; set; }
-        public bool HasKitchen { get; set; }
-        public bool HasInternet { get; set; }
-        public bool HasAirConditioning { get; set; }
         public bool IsAvailable { get; set; }
-
+       
+        public int DormitorygId { get; set; }
+        public Dormitory Dormitory { get; set; } = null!;
+        
+        public int RoomEquipmentId { get; set; }
+        public RoomEquipment RoomEquipment { get; set; } = null!;
+         
         public DateTime LastMaintenanceDate { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }

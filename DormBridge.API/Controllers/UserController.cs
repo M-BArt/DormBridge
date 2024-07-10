@@ -19,8 +19,11 @@ namespace DormBridge.API.Controllers
     public partial class UserController : BaseController<UserController>
     {
         private readonly ICommandHandler<SignUp> _signUpHandler;
-        private readonly ICommandHandler<SignIn> _signInHandler;       
+        private readonly ICommandHandler<SignIn> _signInHandler;
+
+        private readonly IQueryHandler<NullQuery<UserDto>,UserDto> _getProfileHanlder;
         private readonly IQueryHandler<GetUsers, IEnumerable<UserDto>> _getUsersHandler;
+
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public UserController(

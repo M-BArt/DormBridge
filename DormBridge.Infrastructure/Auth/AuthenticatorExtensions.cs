@@ -53,11 +53,11 @@ namespace DormBridge.Infrastructure.Auth
                             if (!string.IsNullOrEmpty(accessToken))
                             {
                                 ctx.Token = accessToken;
-                                Console.WriteLine($"Token from cookie: {accessToken}"); // Dodaj logowanie
+                                Console.WriteLine($"Token from cookie: {accessToken}");
                             }
                             else
                             {
-                                Console.WriteLine("No token found in cookie."); // Dodaj logowanie
+                                Console.WriteLine("No token found in cookie.");
                             }
                             return Task.CompletedTask;
                         }
