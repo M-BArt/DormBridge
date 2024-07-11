@@ -16,10 +16,11 @@ using Newtonsoft.Json.Linq;
 
 namespace DormBridge.Infrastructure.Queries.Handlers
 {
-    internal class GetProfileHandler : IQueryHandler<NullQuery<UserDto>, UserDto>
+    internal class GetProfileHandler : IQueryHandler<UserDto>
     {
         private readonly DormBridgeDbContext _dbContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private string token;
 
         public GetProfileHandler(DormBridgeDbContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
@@ -27,23 +28,24 @@ namespace DormBridge.Infrastructure.Queries.Handlers
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<UserDto?> HandleAsyncAction(NullQuery<UserDto> query)
+        public async Task<UserDto?> HandleAsyncAction()
         {
 
-            //var authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"].ToString();
-            //if (authHeader != null && authHeader.StartsWith("Bearer"))
-            //{
-            //    var token = authHeader.Substring("Bearer ".Length).Trim();
-            //    return Ok(new { Token = token });
-            //}
+            var authHeader = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString();
 
-            var token = _httpContextAccessor.HttpContext.Session.GetString("JWToken");
+            if (authHeader != null && authHeader.StartsWith("Bearer"))
+            {
+                token = authHeader.Substring("Bearer ".Length).Trim();
+            }
+            else 
+            { 
+                token = _httpContextAccessor.HttpContext?.Session.GetString("JWToken") ?? string.Empty; 
+            }
 
             JwtSecurityTokenHandler tokenHandler = new();
             JwtSecurityToken decryptedToken = tokenHandler.ReadJwtToken(token);
 
             string userId = decryptedToken.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            //string userRole = decryptedToken.Claims.First(c => c.Type == ClaimTypes.Role).Value;
 
             var user = await _dbContext.Users
                 .Where(u => u.UserGuid.ToString() == userId)
@@ -53,6 +55,7 @@ namespace DormBridge.Infrastructure.Queries.Handlers
                     Username = u.Username,
                     Email = u.Email,
                 }).FirstOrDefaultAsync();
+
             return user;
         }
     }

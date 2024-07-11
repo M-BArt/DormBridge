@@ -1,10 +1,10 @@
 ﻿using System.Security.Cryptography;
 using DormBridge.Application.Abstractions;
 using DormBridge.Application.Exceptions.User;
-using DormBridge.Domain.Repositories;
 using DormBridge.Domain.ValueObjects.User;
 using DormBridge.Domain.ValueObjects.Student;
 using Microsoft.IdentityModel.Tokens;
+using DormBridge.Domain.Repositories;
 
 namespace DormBridge.Application.Commands.User.Handlers
 {
@@ -12,11 +12,12 @@ namespace DormBridge.Application.Commands.User.Handlers
     {
         private readonly IUserRepository _userRepository;
         private readonly IStudentRepository _studentRepository;
-
-        public SignUpHandler(IUserRepository userRepository, IStudentRepository studentRepository)
+        private readonly IPasswordManager _passwordManager;
+        public SignUpHandler(IUserRepository userRepository, IStudentRepository studentRepository, IPasswordManager passwordManager)
         {
             _userRepository = userRepository;
             _studentRepository = studentRepository;
+            _passwordManager = passwordManager;
         }
 
         public async Task HandleAsyncAction(SignUp command)
@@ -33,7 +34,7 @@ namespace DormBridge.Application.Commands.User.Handlers
             if (!(command.Password == command.RepeatPassword))
                 throw new PasswordsAreNotTheSame();
 
-            CreateHashPassword(command.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            _passwordManager.CreateHashPassword(command.Password, out byte[] passwordHash, out byte[] passwordSalt);
             
             var role = Role.User();
 
@@ -56,16 +57,6 @@ namespace DormBridge.Application.Commands.User.Handlers
             );
 
             await _userRepository.AddAsync(user);
-        }
-
-        private static (byte[], byte[]) CreateHashPassword(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (HMACSHA256 hmac = new())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
-            return (passwordHash, passwordSalt);
         }
     }
 }

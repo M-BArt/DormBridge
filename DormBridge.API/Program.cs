@@ -11,8 +11,8 @@ namespace DormBridge.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
+            builder.Services.AddApplication();  
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
 
@@ -37,9 +37,9 @@ namespace DormBridge.API
                 app.UseSwaggerUI();
             }
             app.UseCors("AllowAll");
-            app.UseAuthentication();
             app.UseSession();
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
             app.Run();

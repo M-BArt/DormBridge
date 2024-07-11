@@ -22,6 +22,17 @@ namespace DormBridge.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task UpdateAsync(User user)
+        {
+            _dbContext.Users.Update(user);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<User?> GetUserById(Guid userId)
+        {
+            return await _dbContext.Users.SingleOrDefaultAsync(u => u.UserGuid == userId);
+        }
+        
         public async Task<User?> GetUserByEmailAsync(Email email)
         {
             return await _dbContext.Users.SingleOrDefaultAsync(u => u.Email == email);

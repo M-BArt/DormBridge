@@ -1,6 +1,5 @@
-﻿using DormBridge.Application.DTOs.User;
+﻿using DormBridge.Application.Commands.User;
 using DormBridge.Application.Exceptions;
-using DormBridge.Application.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -9,21 +8,23 @@ namespace DormBridge.API.Controllers
 {
     public partial class UserController
     {
-        // GET: /user
+        // POST: /user/change-password
         /// <summary>
-        /// Action to get a users  [Authorize]
+        /// Action to change password  [Authorize]
         /// </summary>
 
-        [HttpGet("/user")]
+        [HttpPost("/user/change-password")]
         [Authorize]
-        [SwaggerOperation(Summary = "Action to get a user. [Authorize]")]
-        public async Task<ActionResult<UserDto>> GetProfile()
+        [SwaggerOperation(Summary = "Action to change password. [Authorize]")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePassword command)
         {
             try
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
 
-                return Ok(await _getProfileHanlder.HandleAsyncAction());
+                await _changePasswordHandler.HandleAsyncAction(command);
+
+                return Ok("Zaktualizowano hasło");
             }
             catch (BusinessException ex)
             {

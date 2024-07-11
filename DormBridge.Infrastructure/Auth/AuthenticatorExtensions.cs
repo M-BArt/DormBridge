@@ -2,6 +2,7 @@
 using DormBridge.Application.Authenticator;
 using DormBridge.Application.DTOs.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,32 +47,21 @@ namespace DormBridge.Infrastructure.Auth
                     {
                         OnMessageReceived = ctx =>
                         {
-                            
-                            
-                            ctx.Request.Cookies.TryGetValue("accessToken", out var accessToken);
-                            
+                            var accessToken = ctx.HttpContext.Session.GetString("JWToken");
+                           
                             if (!string.IsNullOrEmpty(accessToken))
                             {
                                 ctx.Token = accessToken;
-                                Console.WriteLine($"Token from cookie: {accessToken}");
+                                Console.WriteLine($"Token from session: {accessToken}");
                             }
                             else
                             {
-                                Console.WriteLine("No token found in cookie.");
+                                Console.WriteLine("No token found in session.");
                             }
                             return Task.CompletedTask;
                         }
                     };
                 });
-            //services.AddAuthorization(authorization =>
-            //{
-            //    authorization.AddPolicy("IsPersonnel", policy =>
-            //    {
-            //        policy.RequireRole("personnel");
-            //    });
-            //});
-
-
             return services;
         }
     }

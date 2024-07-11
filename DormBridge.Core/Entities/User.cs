@@ -1,5 +1,6 @@
 ﻿using DormBridge.Domain.ValueObjects.Student;
 using DormBridge.Domain.ValueObjects.User;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DormBridge.Domain.Entities
 {
@@ -26,6 +27,16 @@ namespace DormBridge.Domain.Entities
             PasswordSalt = passwordSalt;
             CreateDate = createDate;
             UpdateDate = updateDate;
+
+        }
+
+        public void ChangePassword(byte[] newPasswordHash, byte[] newPasswordSalt)
+        {
+            if (newPasswordHash == null)
+                throw new Exception("xxx");
+
+            PasswordHash = newPasswordHash;
+            PasswordSalt = newPasswordSalt;
         }
     }
 }

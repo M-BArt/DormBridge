@@ -13,34 +13,27 @@ namespace DormBridge.Application.Commands.User.Handlers
     {
         private readonly IUserRepository _userRepository;
         private readonly IAuthenticator _authenticator;
+        private readonly IPasswordManager _passwordManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public SignInHandler(IUserRepository userRepository, IAuthenticator authenticator, IHttpContextAccessor httpContextAccessor)
+        public SignInHandler(IUserRepository userRepository, IAuthenticator authenticator, IHttpContextAccessor httpContextAccessor, IPasswordManager passwordManager)
         {
             _httpContextAccessor = httpContextAccessor;
             _userRepository = userRepository;
             _authenticator = authenticator;
+            _passwordManager = passwordManager;
         }
 
         public async Task HandleAsyncAction(SignIn command)
         {
             var user = await _userRepository.GetUserByEmailAsync(command.Login) ?? throw new InvalidPasswordOrLogin();
 
-            if (!VerifyHashPassword(command.Password, user.PasswordHash, user.PasswordSalt))
+            if (!_passwordManager.VerifyHashPassword(command.Password, user.PasswordHash, user.PasswordSalt))
                 throw new InvalidPasswordOrLogin();
 
             var token = _authenticator.CreateToken(user.UserGuid, user.Role);
 
-            _httpContextAccessor.HttpContext?.Session.SetString("JWToken", token.ToString());
+            _httpContextAccessor.HttpContext?.Session.SetString("JWToken", token.AccessToken);
 
-        }
-
-        private static bool VerifyHashPassword(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using (HMACSHA256 hmac = new(passwordSalt))
-            {
-                byte[] computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
-            }
         }
     }
 }

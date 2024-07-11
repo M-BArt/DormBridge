@@ -33,9 +33,14 @@ namespace DormBridge.Infrastructure
         
             services.AddAuthenticator(configuration);
             services.AddHttpContextAccessor();
+
+            services.AddScoped<IPasswordManager, PasswordManager>();
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IStudentRepository, StudentRepository>();
+
             services.AddScoped<IQueryHandler<GetUsers, IEnumerable<UserDto>>, GetUsersHandler>();
+            services.AddScoped<IQueryHandler<UserDto>, GetProfileHandler>();
 
             services.AddCors(options =>
             {

@@ -1,12 +1,8 @@
 ﻿using DormBridge.Application.Abstractions;
 using DormBridge.Application.Commands.User;
 using DormBridge.Application.DTOs.User;
-using DormBridge.Application.Exceptions;
 using DormBridge.Application.Queries;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 
 
 namespace DormBridge.API.Controllers
@@ -20,23 +16,18 @@ namespace DormBridge.API.Controllers
     {
         private readonly ICommandHandler<SignUp> _signUpHandler;
         private readonly ICommandHandler<SignIn> _signInHandler;
+        private readonly ICommandHandler<ChangePassword> _changePasswordHandler;
 
-        private readonly IQueryHandler<NullQuery<UserDto>,UserDto> _getProfileHanlder;
+        private readonly IQueryHandler<UserDto> _getProfileHanlder;
         private readonly IQueryHandler<GetUsers, IEnumerable<UserDto>> _getUsersHandler;
 
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public UserController(
-            ICommandHandler<SignUp> signUpHandler, 
-            ICommandHandler<SignIn> signInHandler,
-            IQueryHandler<GetUsers, IEnumerable<UserDto>> getUsersHandler,
-            IHttpContextAccessor httpContextAccessor
-            )
+        public UserController(ICommandHandler<SignUp> signUpHandler, ICommandHandler<SignIn> signInHandler, IQueryHandler<UserDto> getProfileHanlder, IQueryHandler<GetUsers, IEnumerable<UserDto>> getUsersHandler, ICommandHandler<ChangePassword> changePasswordHandler)
         {
             _signUpHandler = signUpHandler;
             _signInHandler = signInHandler;
+            _getProfileHanlder = getProfileHanlder;
             _getUsersHandler = getUsersHandler;
-            _httpContextAccessor = httpContextAccessor;
+            _changePasswordHandler = changePasswordHandler;
         }
     }
 }
