@@ -34,7 +34,7 @@ namespace DormBridge.Application.Commands.User.Handlers
             if (!(command.Password == command.RepeatPassword))
                 throw new PasswordsAreNotTheSame();
 
-            _passwordManager.CreateHashPassword(command.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            _passwordManager.CreateHashPassword(new Password(command.Password), out byte[] passwordHash, out byte[] passwordSalt);
             
             var role = Role.User();
 

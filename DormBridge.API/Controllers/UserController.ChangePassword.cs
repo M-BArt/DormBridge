@@ -24,7 +24,7 @@ namespace DormBridge.API.Controllers
 
                 await _changePasswordHandler.HandleAsyncAction(command);
 
-                return Ok("Zaktualizowano hasło");
+                return Ok("Password updated");
             }
             catch (BusinessException ex)
             {

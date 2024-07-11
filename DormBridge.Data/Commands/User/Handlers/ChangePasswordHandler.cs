@@ -1,7 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using DormBridge.Application.Abstractions;
+using DormBridge.Application.Exceptions.User;
 using DormBridge.Domain.Repositories;
+using DormBridge.Domain.ValueObjects.User;
 using Microsoft.AspNetCore.Http;
 
 namespace DormBridge.Application.Commands.User.Handlers
@@ -23,7 +25,7 @@ namespace DormBridge.Application.Commands.User.Handlers
         }
 
         public async Task HandleAsyncAction(ChangePassword command)
-        {
+        {          
             var authHeader = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString();
 
             if (authHeader != null && authHeader.StartsWith("Bearer"))
@@ -40,12 +42,12 @@ namespace DormBridge.Application.Commands.User.Handlers
 
             var userId = decryptedToken.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
-            var user = await _userRepository.GetUserById(Guid.Parse(userId);
+            var user = await _userRepository.GetUserById(Guid.Parse(userId));
 
             if (!_passwordManager.VerifyHashPassword(command.currentPassword, user.PasswordHash, user.PasswordSalt))
-                throw new Exception("Invalid current password");
+                throw new InvalidCurrentPassword();
 
-            _passwordManager.CreateHashPassword(command.newPassword, out byte[] passwordHash, out byte[] passwordSalt);
+            _passwordManager.CreateHashPassword(new Password(command.newPassword), out byte[] passwordHash, out byte[] passwordSalt);
 
             user.ChangePassword(passwordHash, passwordSalt);
 

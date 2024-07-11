@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DormBridge.Application.DTOs.User;
+using DormBridge.Application.DTOs;
 
 namespace DormBridge.Application.Authenticator
 {

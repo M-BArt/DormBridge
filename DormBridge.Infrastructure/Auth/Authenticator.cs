@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using DormBridge.Application.Authenticator;
-using DormBridge.Application.DTOs.User;
+using DormBridge.Application.DTOs;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 

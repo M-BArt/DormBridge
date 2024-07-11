@@ -1,5 +1,6 @@
 ﻿using DormBridge.Domain.ValueObjects.Student;
 using DormBridge.Domain.ValueObjects.User;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DormBridge.Domain.Entities
@@ -32,9 +33,6 @@ namespace DormBridge.Domain.Entities
 
         public void ChangePassword(byte[] newPasswordHash, byte[] newPasswordSalt)
         {
-            if (newPasswordHash == null)
-                throw new Exception("xxx");
-
             PasswordHash = newPasswordHash;
             PasswordSalt = newPasswordSalt;
         }
