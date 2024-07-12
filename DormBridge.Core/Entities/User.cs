@@ -1,7 +1,6 @@
 ﻿using DormBridge.Domain.ValueObjects.Student;
 using DormBridge.Domain.ValueObjects.User;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System;
 
 namespace DormBridge.Domain.Entities
 {
@@ -14,10 +13,14 @@ namespace DormBridge.Domain.Entities
         public StudentId? StudentId { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+
+        public int? RoomId { get; set; }
+        public Room? Room { get; set; }
+
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
 
-        public User(Guid userGuid, Username username, Email email, Role role, StudentId studentId, byte[] passwordHash, byte[] passwordSalt, DateTime createDate, DateTime updateDate)
+        public User(Guid userGuid, Username username, Email email, Role role, StudentId? studentId, byte[] passwordHash, byte[] passwordSalt, int? roomId, Room? room, DateTime createDate, DateTime updateDate)
         {
             UserGuid = userGuid;
             Username = username;
@@ -26,9 +29,10 @@ namespace DormBridge.Domain.Entities
             StudentId = studentId;
             PasswordHash = passwordHash;
             PasswordSalt = passwordSalt;
+            RoomId = roomId;
+            Room = room;
             CreateDate = createDate;
             UpdateDate = updateDate;
-
         }
 
         public void ChangePassword(byte[] newPasswordHash, byte[] newPasswordSalt)

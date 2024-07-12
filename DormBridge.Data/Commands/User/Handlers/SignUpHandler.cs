@@ -52,6 +52,8 @@ namespace DormBridge.Application.Commands.User.Handlers
                 new StudentId(command.StudentId),
                 passwordHash,
                 passwordSalt,
+                null,
+                null,
                 DateTime.Now,
                 DateTime.Now
             );

@@ -12,12 +12,23 @@ namespace DormBridge.Domain.Entities
         public int Occupied { get; set; }
         public bool IsAvailable { get; set; }
        
+        
+        
+        
+        
+        public List<User> Users { get; set; } = new List<User>();
+        
+        
+        
+        
+        
         public int DormitorygId { get; set; }
         public Dormitory Dormitory { get; set; } = null!;
-        
+             
         public int RoomEquipmentId { get; set; }
-        public RoomEquipment RoomEquipment { get; set; } = null!;
+        public RoomEquipment RoomEquipment { get; set; }
          
+        
         public DateTime LastMaintenanceDate { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }

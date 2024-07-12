@@ -28,10 +28,22 @@ namespace DormBridge.Infrastructure.DAL.Configurations
             builder.Property(u => u.StudentId)
                 .HasConversion(u => u.Value, u => new StudentId(u));
 
+
+           
+
             builder.Property(u => u.PasswordHash).IsRequired();
+
             builder.Property(u => u.PasswordSalt).IsRequired();
-            builder.Property(u => u.CreateDate).HasColumnType("datetime").IsRequired();
-            builder.Property(u => u.UpdateDate).HasColumnType("datetime").IsRequired();
+
+            builder.Property(u => u.CreateDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .IsRequired();
+
+            builder.Property(u => u.UpdateDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .IsRequired();
         }
     }
 }

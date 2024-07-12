@@ -11,6 +11,10 @@
         public string Region { get; set; }
         public string PostalCode { get; set; }
         public string Country { get; set; }
+
+        public ICollection<Room> Rooms { get; set; } = new List<Room>();
+        public List<Personnel> Personnels { get; set; } = new List<Personnel>();
+
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
 

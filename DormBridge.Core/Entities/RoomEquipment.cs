@@ -15,8 +15,9 @@ namespace DormBridge.Domain.Entities
        public bool AirConditioning { get; set; }
        public bool Heating { get; set; }
        public bool Bathroom { get; set; }
+       public Room Room { get; set; }
 
-        public RoomEquipment(int roomEquipmentId, bool refrigerator, bool microwave, bool internetAccess, bool airConditioning, bool heating, bool bathroom)
+        public RoomEquipment(int roomEquipmentId, bool refrigerator, bool microwave, bool internetAccess, bool airConditioning, bool heating, bool bathroom, Room room)
         {
             RoomEquipmentId = roomEquipmentId;
             Refrigerator = refrigerator;
@@ -25,6 +26,7 @@ namespace DormBridge.Domain.Entities
             AirConditioning = airConditioning;
             Heating = heating;
             Bathroom = bathroom;
+            Room = room;
         }
     }
 }

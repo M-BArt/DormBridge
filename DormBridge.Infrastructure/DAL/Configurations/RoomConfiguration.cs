@@ -33,11 +33,13 @@ namespace DormBridge.Infrastructure.DAL.Configurations
 
             builder.Property(r => r.RoomEquipmentId).IsRequired();
 
+            builder.HasMany(u => u.Users).WithOne(r => r.Room).HasForeignKey(r => r.RoomId);
+
             builder.Property(r => r.LastMaintenanceDate).HasColumnType("datetime");
 
             builder.Property(r => r.CreateDate).HasDefaultValueSql("(getdate())").HasColumnType("datetime").IsRequired();
 
-            builder.Property(r => r.UpdateDate).HasColumnType("datetime");
+            builder.Property(r => r.UpdateDate).HasDefaultValueSql("(getdate())").HasColumnType("datetime");
         }
     }
 }

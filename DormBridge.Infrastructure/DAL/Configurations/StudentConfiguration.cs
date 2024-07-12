@@ -21,12 +21,16 @@ namespace DormBridge.Infrastructure.DAL.Configurations
             builder.HasIndex(u => u.StudentId).IsUnique();
 
             builder.Property(u => u.Firstname).IsRequired().HasConversion(u => u.Value, u => new Name(u));
+
             builder.Property(u => u.Lastname).IsRequired().HasConversion(u => u.Value, u => new Name(u));
+
             builder.Property(u => u.Address).HasConversion(u => u.Value, u => new Address(u));
+
             builder.Property(u => u.PhoneNumber).HasConversion(u => u.Value, u => new Phone(u));
          
-            builder.Property(u => u.CreateDate).HasColumnType("datetime").IsRequired();
-            builder.Property(u => u.UpdateDate).HasColumnType("datetime").IsRequired();
+            builder.Property(u => u.CreateDate).HasDefaultValueSql("(getdate())").HasColumnType("datetime").IsRequired();
+
+            builder.Property(u => u.UpdateDate).HasDefaultValueSql("(getdate())").HasColumnType("datetime").IsRequired();
         }
     }
 }
