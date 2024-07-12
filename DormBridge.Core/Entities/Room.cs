@@ -17,15 +17,10 @@ namespace DormBridge.Domain.Entities
         
         
         public List<User> Users { get; set; } = new List<User>();
-        
-        
-        
-        
-        
+
         public int DormitorygId { get; set; }
         public Dormitory Dormitory { get; set; } = null!;
              
-        public int RoomEquipmentId { get; set; }
         public RoomEquipment RoomEquipment { get; set; }
          
         
