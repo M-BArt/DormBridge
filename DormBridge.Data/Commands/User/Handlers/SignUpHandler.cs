@@ -1,10 +1,11 @@
-﻿using System.Security.Cryptography;
-using DormBridge.Application.Abstractions;
+﻿using DormBridge.Application.Abstractions;
 using DormBridge.Application.Exceptions.User;
-using DormBridge.Domain.ValueObjects.User;
-using DormBridge.Domain.ValueObjects.Student;
-using Microsoft.IdentityModel.Tokens;
+using DormBridge.Domain.Entities;
 using DormBridge.Domain.Repositories;
+using DormBridge.Domain.ValueObjects.Student;
+using DormBridge.Domain.ValueObjects.User;
+using Microsoft.Extensions.Configuration.UserSecrets;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DormBridge.Application.Commands.User.Handlers
 {
@@ -21,43 +22,48 @@ namespace DormBridge.Application.Commands.User.Handlers
         }
 
         public async Task HandleAsyncAction(SignUp command)
-        {
-            if (await _userRepository.GetUserByEmailAsync(new Email(command.Email)) != null)
-                throw new EmailAlreadyInUseException(command.Email);
+        {                     
+            if (await _userRepository.GetUserByEmailAsync(new Email(command.Email)) != null) throw new EmailAlreadyInUseException(command.Email);
+            if (await _userRepository.GetUserByNameAsync(new Username(command.Username)) != null) throw new UsernameAlreadyInUseException(command.Username);
+            if (await _userRepository.GetUserByStudentIdAsync(new StudentAlbum(command.StudentAlbum)) != null) throw new StudentIdAlreadyInUse(command.StudentAlbum);
+            if (!(command.Password == command.RepeatPassword)) throw new PasswordsAreNotTheSame();
 
-            if (await _userRepository.GetUserByNameAsync(new Username(command.Username)) != null)
-                throw new UsernameAlreadyInUseException(command.Username);
-           
-            if (await _userRepository.GetUserByStudentIdAsync(new StudentId(command.StudentId)) != null)
-                throw new StudentIdAlreadyInUse(command.StudentId);
+            var userId = Guid.NewGuid();
             
-            if (!(command.Password == command.RepeatPassword))
-                throw new PasswordsAreNotTheSame();
-
-            _passwordManager.CreateHashPassword(new Password(command.Password), out byte[] passwordHash, out byte[] passwordSalt);
+            _passwordManager.CreateHashPassword(new Password(command.Password), out byte[] passwordHash, out byte[] passwordSalt);         
             
-            var role = Role.User();
-
-            if (!command.StudentId.IsNullOrEmpty())
-                if (await _studentRepository.GetStudentByStudentIdAsync(new StudentId(command.StudentId)) != null)
-                    Role.Student();
-                else
-                    throw new StudentIdNoExist(command.StudentId);
-
             var user = new Domain.Entities.User(
-                Guid.NewGuid(),
+                userId,
                 new Username(command.Username),
                 new Email(command.Email),
-                role,
-                new StudentId(command.StudentId),
+                null,
                 passwordHash,
                 passwordSalt,
-                null,
-                null,
                 DateTime.Now,
-                DateTime.Now
+                DateTime.Now,
+                null,
+                null
             );
 
+            user.Role = Role.User();
+
+            if (!command.StudentAlbum.IsNullOrEmpty())
+            {
+                var student = await _studentRepository.GetStudentByStudentAlbumAsync(new StudentAlbum(command.StudentAlbum));
+                if (student != null)
+                {
+                    user.Role = Role.Student();
+                    student.UserId = user.UserGuid;
+                    student.UpdateDate = DateTime.UtcNow;
+                    await _studentRepository.UpdateAsync(student);
+                }
+                else
+                {
+                    throw new StudentIdNoExist(command.StudentAlbum);
+                }
+            }
+
+       
             await _userRepository.AddAsync(user);
         }
     }

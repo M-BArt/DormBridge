@@ -10,11 +10,11 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace DormBridge.Domain.ValueObjects.Student
 {
-    public sealed record StudentId
+    public sealed record StudentAlbum
     {
         public string? Value;
 
-        public StudentId(string? value)
+        public StudentAlbum(string? value)
         {
             if (!value.IsNullOrEmpty())
             {
@@ -29,8 +29,8 @@ namespace DormBridge.Domain.ValueObjects.Student
             Value = value;
         }
 
-        public static implicit operator string?(StudentId studentId) => studentId.Value;
-        public static implicit operator StudentId(string value) => new(value);
+        public static implicit operator string?(StudentAlbum studentAlbum) => studentAlbum.Value;
+        public static implicit operator StudentAlbum(string value) => new(value);
         public override string? ToString() => Value;
     }
 }

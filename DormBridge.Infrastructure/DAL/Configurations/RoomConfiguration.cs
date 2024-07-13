@@ -29,9 +29,9 @@ namespace DormBridge.Infrastructure.DAL.Configurations
 
             builder.Property(r => r.IsAvailable).IsRequired();
 
-            builder.HasMany(u => u.Users).WithOne(r => r.Room).HasForeignKey(r => r.RoomId);
+            builder.HasMany(s => s.Studnets).WithOne(r => r.Room).HasForeignKey(s => s.RoomId);
 
-            builder.HasOne(re => re.RoomEquipment).WithOne(r => r.Room).HasForeignKey<RoomEquipment>(re => re.RoomId)
+            builder.HasOne(re => re.RoomEquipment).WithOne(r => r.Room).HasForeignKey<RoomEquipment>(re => re.RoomId);
 
             builder.Property(r => r.LastMaintenanceDate).HasColumnType("datetime");
 

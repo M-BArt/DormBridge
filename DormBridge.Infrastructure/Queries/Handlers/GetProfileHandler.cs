@@ -54,7 +54,6 @@ namespace DormBridge.Infrastructure.Queries.Handlers
                     UserGuid = u.UserGuid,
                     Username = u.Username,
                     Email = u.Email,
-                    StudentId = u.StudentId,
                     Role = u.Role,
                 }).FirstOrDefaultAsync();
 

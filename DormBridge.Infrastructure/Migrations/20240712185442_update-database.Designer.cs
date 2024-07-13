@@ -4,6 +4,7 @@ using DormBridge.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DormBridge.Infrastructure.Migrations
 {
     [DbContext(typeof(DormBridgeDbContext))]
-    partial class DormBridgeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240712185442_update-database")]
+    partial class updatedatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,8 +65,7 @@ namespace DormBridge.Infrastructure.Migrations
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
-                        .HasMaxLength(6)
-                        .HasColumnType("nvarchar(6)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Region")
                         .IsRequired()
@@ -82,54 +84,6 @@ namespace DormBridge.Infrastructure.Migrations
                     b.ToTable("Dormitories");
                 });
 
-            modelBuilder.Entity("DormBridge.Domain.Entities.Personnel", b =>
-                {
-                    b.Property<Guid>("PresonnelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreateDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
-
-                    b.Property<int>("DormitoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Firstname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lastname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("PresonnelId");
-
-                    b.HasIndex("DormitoryId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Personnels");
-                });
-
             modelBuilder.Entity("DormBridge.Domain.Entities.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -146,7 +100,7 @@ namespace DormBridge.Infrastructure.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
 
-                    b.Property<int>("DormitoryId")
+                    b.Property<int>("DormitorygId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsAvailable")
@@ -175,7 +129,7 @@ namespace DormBridge.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DormitoryId");
+                    b.HasIndex("DormitorygId");
 
                     b.ToTable("Rooms");
                 });
@@ -251,12 +205,10 @@ namespace DormBridge.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RoomId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StudentAlbum")
+                    b.Property<string>("StudentId")
                         .IsRequired()
                         .HasMaxLength(9)
                         .HasColumnType("nvarchar(9)");
@@ -266,19 +218,10 @@ namespace DormBridge.Infrastructure.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("StudnetGuid");
 
-                    b.HasIndex("RoomId");
-
-                    b.HasIndex("StudentAlbum")
+                    b.HasIndex("StudentId")
                         .IsUnique();
-
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Students");
                 });
@@ -311,6 +254,12 @@ namespace DormBridge.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("UpdateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
@@ -326,36 +275,19 @@ namespace DormBridge.Infrastructure.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
+                    b.HasIndex("RoomId");
+
                     b.HasIndex("Username")
                         .IsUnique();
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DormBridge.Domain.Entities.Personnel", b =>
-                {
-                    b.HasOne("DormBridge.Domain.Entities.Dormitory", "Dormitory")
-                        .WithMany("Personnels")
-                        .HasForeignKey("DormitoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DormBridge.Domain.Entities.User", "User")
-                        .WithOne("Personnel")
-                        .HasForeignKey("DormBridge.Domain.Entities.Personnel", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Dormitory");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("DormBridge.Domain.Entities.Room", b =>
                 {
                     b.HasOne("DormBridge.Domain.Entities.Dormitory", "Dormitory")
                         .WithMany("Rooms")
-                        .HasForeignKey("DormitoryId")
+                        .HasForeignKey("DormitorygId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -373,25 +305,17 @@ namespace DormBridge.Infrastructure.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("DormBridge.Domain.Entities.Student", b =>
+            modelBuilder.Entity("DormBridge.Domain.Entities.User", b =>
                 {
                     b.HasOne("DormBridge.Domain.Entities.Room", "Room")
-                        .WithMany("Studnets")
+                        .WithMany("Users")
                         .HasForeignKey("RoomId");
 
-                    b.HasOne("DormBridge.Domain.Entities.User", "User")
-                        .WithOne("Student")
-                        .HasForeignKey("DormBridge.Domain.Entities.Student", "UserId");
-
                     b.Navigation("Room");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DormBridge.Domain.Entities.Dormitory", b =>
                 {
-                    b.Navigation("Personnels");
-
                     b.Navigation("Rooms");
                 });
 
@@ -400,14 +324,7 @@ namespace DormBridge.Infrastructure.Migrations
                     b.Navigation("RoomEquipment")
                         .IsRequired();
 
-                    b.Navigation("Studnets");
-                });
-
-            modelBuilder.Entity("DormBridge.Domain.Entities.User", b =>
-                {
-                    b.Navigation("Personnel");
-
-                    b.Navigation("Student");
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

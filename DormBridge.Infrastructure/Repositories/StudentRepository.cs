@@ -14,10 +14,15 @@ namespace DormBridge.Infrastructure.Repositories
         {
             _dbContext = dbContext;
         }
-
-        public async Task<Student?> GetStudentByStudentIdAsync(StudentId studentId)
+        public async Task UpdateAsync(Student student)
         {
-            return await _dbContext.Students.SingleOrDefaultAsync(s => s.StudentId == studentId);
+            _dbContext.Students.Update(student);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Student?> GetStudentByStudentAlbumAsync(StudentAlbum studentAlbum)
+        {
+            return await _dbContext.Students.SingleOrDefaultAsync(s => s.StudentAlbum == studentAlbum);
         }
     }
 }

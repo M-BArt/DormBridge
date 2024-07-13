@@ -22,8 +22,6 @@ namespace DormBridge.Infrastructure.DAL.Configurations
 
             builder.Property(re => re.Bathroom).IsRequired();
 
-            builder.HasOne(r =?)
-
             builder.Property(r => r.CreateDate).HasDefaultValueSql("(getdate())").HasColumnType("datetime").IsRequired();
 
             builder.Property(r => r.UpdateDate).HasDefaultValueSql("(getdate())").HasColumnType("datetime");

@@ -10,6 +10,7 @@ namespace DormBridge.Infrastructure.DAL
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Dormitory> Dormitories { get; set; }
         public DbSet<RoomEquipment> RoomEquipments { get; set; }
+        public DbSet<Personnel> Personnels { get; set; }
 
         public DormBridgeDbContext(DbContextOptions<DormBridgeDbContext> dbContextOptions) : base(dbContextOptions) { }
 

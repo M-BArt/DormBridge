@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DormBridge.Domain.ValueObjects.Student
+namespace DormBridge.Domain.ValueObjects
 {
     public sealed record Address
     {

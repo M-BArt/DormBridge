@@ -43,9 +43,9 @@ namespace DormBridge.Infrastructure.Repositories
             return await _dbContext.Users.SingleOrDefaultAsync(u => u.Username == username);
         }
 
-        public async Task<User?> GetUserByStudentIdAsync(StudentId studentId)
+        public async Task<User?> GetUserByStudentIdAsync(StudentAlbum studentId)
         {
-            return await _dbContext.Users.SingleOrDefaultAsync(u => u.StudentId == studentId);
+            return await _dbContext.Users.SingleOrDefaultAsync(u => u.Student.StudentAlbum == studentId);
         }
     }
 }

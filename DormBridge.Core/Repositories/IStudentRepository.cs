@@ -5,6 +5,7 @@ namespace DormBridge.Domain.Repositories
 {
     public interface IStudentRepository
     {
-        Task<Student?> GetStudentByStudentIdAsync(StudentId studentId);
+        Task UpdateAsync(Student studnet);
+        Task<Student?> GetStudentByStudentAlbumAsync(StudentAlbum StudentAlbum);
     }
 }

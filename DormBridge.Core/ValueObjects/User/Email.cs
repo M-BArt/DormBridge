@@ -11,8 +11,6 @@ namespace DormBridge.Domain.ValueObjects.User
 
         public Email(string value)
         {
-            if (string.IsNullOrWhiteSpace(value)) throw new InvalidEmailException(value);
-
             if (!_regex.IsMatch(value)) throw new InvalidEmailException(value);
 
             Value = value;
