@@ -9,6 +9,7 @@ namespace DormBridge.Domain.ValueObjects.User
         private const string user = "user";
         private const string student = "student";
         private const string personnel = "personnel";
+        private const string admin = "admin";
 
         private IEnumerable<string> Roles { get; } = [user, student, personnel]; 
         
@@ -25,6 +26,7 @@ namespace DormBridge.Domain.ValueObjects.User
         public static Role User() => new(user);
         public static Role Student() => new(student);
         public static Role Personnel() => new(personnel);
+        public static Role Admin() => new(admin);
 
 
         public static implicit operator string(Role role) => role.Value;

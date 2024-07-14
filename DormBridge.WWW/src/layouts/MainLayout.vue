@@ -84,7 +84,7 @@ const leftDrawerOpen = ref<boolean>(true);
 const rightDrawerOpen = ref<boolean>(true);
 const router = useRouter();
 
-const userRole = ref<string>('Admin');
+const userRole = ref<string>('User');
 
 const isUser = computed(() => userRole.value === 'User');
 const isPersonnel = computed(() => userRole.value === 'Personnel');

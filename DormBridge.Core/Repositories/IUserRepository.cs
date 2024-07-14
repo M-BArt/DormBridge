@@ -14,8 +14,8 @@ namespace DormBridge.Domain.Repositories
         Task AddAsync(User user);
         Task UpdateAsync(User user);
 
-        Task BeginTransactionAsync();
-        Task CommitTransactionAsync();
-        Task RollbackTransactionAsync();
+        //Task BeginTransactionAsync();
+        //Task CommitTransactionAsync();
+        //Task RollbackTransactionAsync();
     }
 }
