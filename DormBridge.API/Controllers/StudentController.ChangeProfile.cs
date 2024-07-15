@@ -1,6 +1,6 @@
-﻿namespace DormBridge.API.Controllers
-{
-    public class StudentController
-    {
-    }
-}
+﻿//namespace DormBridge.API.Controllers
+//{
+//    public class StudentController
+//    {
+//    }
+//}

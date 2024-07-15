@@ -11,7 +11,6 @@ namespace DormBridge.API.Controllers
     /// Values API Controller
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
     public partial class UserController : BaseController<UserController>
     {
         private readonly ICommandHandler<SignUp> _signUpHandler;

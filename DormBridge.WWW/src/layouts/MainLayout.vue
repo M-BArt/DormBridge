@@ -29,6 +29,12 @@
         </q-scroll-area>
       </q-card>
 
+      <q-card class="asd column flex flex-center no-shadow">
+        <p style="color: white">Your account is not activated?</p>
+        <p style="color: white">Activate your student account</p>
+        <q-btn flat style="background: #21ba45" color="white">Activate</q-btn>
+      </q-card>
+
       <q-card class="asd flex flex-center no-shadow self-end">
         <p style="color: white">© 2024 DormBridge. All rights reserved.</p>
         <p style="color: white">Designed by Bartosz Mroczkowski</p>
