@@ -7,11 +7,11 @@ namespace DormBridge.API.Controllers
     public partial class StudentController
     {
         /// <summary>
-        /// 
+        /// Action to change student profile
         /// </summary>
 
         [HttpPost("student/change-profile")]
-        [SwaggerOperation(Summary = "")]
+        [SwaggerOperation(Summary = "Action to change student profile")]
         public async Task<IActionResult> ChangeProfile()
         {
             try

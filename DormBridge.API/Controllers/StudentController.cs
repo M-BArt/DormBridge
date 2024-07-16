@@ -10,7 +10,6 @@ namespace DormBridge.API.Controllers
     /// Values API Controller
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
     public partial class StudentController : BaseController<StudentController>
     {
         public StudentController()

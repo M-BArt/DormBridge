@@ -1,6 +1,9 @@
-﻿namespace DormBridge.API.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace DormBridge.API.Controllers
 {
-    public class RoomController
+    [ApiController]
+    public partial class RoomController : BaseController<RoomController>
     {
     }
 }
