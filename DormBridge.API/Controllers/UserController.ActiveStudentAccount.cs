@@ -14,7 +14,7 @@ namespace DormBridge.API.Controllers
 
         [HttpPost("user/activate-student-account")]
         [Authorize(Roles = "user")]
-        [SwaggerOperation("Action to activate student account")]
+        [SwaggerOperation(Summary = "Action to activate student account")]
         public async Task<IActionResult> ActiveStudentAccount(ActivateStudentAccount command)
         {
             try

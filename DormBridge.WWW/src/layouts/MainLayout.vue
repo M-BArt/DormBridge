@@ -17,8 +17,58 @@
       </q-toolbar>
     </q-header>
 
-    <!-- Left Drawer for Users and Admin -->
-    <q-drawer :width="325" show-if-above v-model="leftDrawerOpen" side="left" class="asd flex justify-center items-center" v-if="isUser || isAdmin">
+    <!-- Left Drawer for Users-->
+    <q-drawer :width="325" show-if-above v-model="leftDrawerOpen" side="left" class="asd flex justify-center items-center" v-if="isUser">
+      <q-card class="asd flex flex-center no-shadow self-start">
+        <q-card class="asd flex flex-center justify-evently no-shadow q-pa-none q-mt-md" style="width: 100%">
+          <img style="width: 65px" src="/icons/DormBridge.png" />
+          <h4 class="q-pa-none q-ma-md" style="color: white">DormBridge</h4>
+        </q-card>
+        <q-scroll-area :thumb-style="thumbStyle" :bar-style="barStyle" style="height: 55vh; width: 100%">
+          <MenuPanel :menuItems="menuItems" />
+        </q-scroll-area>
+      </q-card>
+
+      <q-card class="asd column q-ma-md flex flex-center no-shadow self-end">
+        <p style="color: white">Your account is not activated?</p>
+        <p style="color: white">Activate your student account</p>
+        <q-btn flat style="background: #21ba45" color="white" @click="showFormDialog = true">Activate</q-btn>
+      </q-card>
+
+      <!-- Form Dialog -->
+      <q-dialog v-model="showFormDialog" persistent>
+        <q-card dark class="asd no-shadow" style="min-width: 350px">
+          <q-card-section>
+            <div class="text-h6">Activate student account</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            <q-form @submit="submitForm">
+              <q-input color="white" dark v-model="formData.name" label="Student Album" />
+              <q-card-actions align="right">
+                <q-btn flat label="Cancel" @click="showFormDialog = false" />
+                <q-btn flat type="submit" style="background: #21ba45" color="white">Activate</q-btn>
+              </q-card-actions>
+            </q-form>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
+
+      <q-card class="asd flex flex-center no-shadow self-end">
+        <p style="color: white">© 2024 DormBridge. All rights reserved.</p>
+        <p style="color: white">Designed by Bartosz Mroczkowski</p>
+      </q-card>
+    </q-drawer>
+
+    <!-- Left Drawer for Students and Admin -->
+    <q-drawer
+      :width="325"
+      show-if-above
+      v-model="leftDrawerOpen"
+      side="left"
+      class="asd flex justify-center items-center"
+      v-if="isStudent || isAdmin"
+    >
       <q-card class="asd flex flex-center no-shadow self-start">
         <q-card class="asd flex flex-center justify-evently no-shadow q-pa-none q-mt-md" style="width: 100%">
           <img style="width: 65px" src="/icons/DormBridge.png" />
@@ -27,12 +77,6 @@
         <q-scroll-area :thumb-style="thumbStyle" :bar-style="barStyle" style="height: 70vh; width: 100%">
           <MenuPanel :menuItems="menuItems" />
         </q-scroll-area>
-      </q-card>
-
-      <q-card class="asd column flex flex-center no-shadow">
-        <p style="color: white">Your account is not activated?</p>
-        <p style="color: white">Activate your student account</p>
-        <q-btn flat style="background: #21ba45" color="white">Activate</q-btn>
       </q-card>
 
       <q-card class="asd flex flex-center no-shadow self-end">
@@ -88,11 +132,13 @@ import { useRouter } from 'vue-router';
 
 const leftDrawerOpen = ref<boolean>(true);
 const rightDrawerOpen = ref<boolean>(true);
+const showFormDialog = ref<boolean>(false);
 const router = useRouter();
 
 const userRole = ref<string>('User');
 
 const isUser = computed(() => userRole.value === 'User');
+const isStudent = computed(() => userRole.value === 'Student');
 const isPersonnel = computed(() => userRole.value === 'Personnel');
 const isAdmin = computed(() => userRole.value === 'Admin');
 
@@ -201,6 +247,12 @@ const barStyle = ref({
   opacity: '0.2',
 });
 
+const formData = ref({
+  name: '',
+  email: '',
+  message: '',
+});
+
 const goToUserHelp = () => {
   router.push('/help-user');
 };
@@ -215,5 +267,10 @@ const toggleLeftDrawer = () => {
 
 const toggleRightDrawer = () => {
   rightDrawerOpen.value = !rightDrawerOpen.value;
+};
+
+const submitForm = () => {
+  console.log('Form Data:', formData.value);
+  showFormDialog.value = false;
 };
 </script>
