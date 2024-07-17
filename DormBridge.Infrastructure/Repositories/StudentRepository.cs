@@ -14,9 +14,26 @@ namespace DormBridge.Infrastructure.Repositories
         {
             _dbContext = dbContext;
         }
+        public async Task AddStudent(Student studnet)
+        {
+            _dbContext.Students.Add(studnet);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Student?> GetById(Guid studentId)
+        {
+            return await _dbContext.Students.SingleOrDefaultAsync(s => s.StudnetGuid == studentId);
+        }
+
         public async Task UpdateAsync(Student student)
         {
             _dbContext.Students.Update(student);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Student student)
+        {
+            _dbContext.Remove(student);
             await _dbContext.SaveChangesAsync();
         }
 

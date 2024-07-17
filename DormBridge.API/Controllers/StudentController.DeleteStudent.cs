@@ -1,4 +1,6 @@
-﻿using DormBridge.Application.Exceptions;
+﻿using DormBridge.Application.Commands.Student;
+using DormBridge.Application.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -10,15 +12,16 @@ namespace DormBridge.API.Controllers
         /// Action to delete student account
         /// </summary>
 
-        [HttpPost("student/{studentId}")]
+        [HttpDelete("student/{studentId}")]
+        [Authorize(Roles = "personnel")]
         [SwaggerOperation(Summary = "Action to delete student account")]
-        public async Task<IActionResult> DeleteStudent()
+        public async Task<IActionResult> DeleteStudent([FromRoute] Guid StudentId)
         {
             try
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
 
-                //await _activateStudentAccountHandler.HandleAsyncAction(command);
+                await _deleteStudentHandler.HandleAsyncAction(new DeleteStudent(StudentId));
 
                 return Ok();
             }

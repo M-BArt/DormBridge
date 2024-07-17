@@ -1,8 +1,5 @@
-﻿using System.Security.Cryptography;
-using Azure;
-using DormBridge.Application.Abstractions;
+﻿using DormBridge.Application.Abstractions;
 using DormBridge.Application.Authenticator;
-using DormBridge.Application.DTOs.User;
 using DormBridge.Application.Exceptions.User;
 using DormBridge.Domain.Repositories;
 using Microsoft.AspNetCore.Http;

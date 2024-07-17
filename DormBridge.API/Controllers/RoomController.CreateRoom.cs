@@ -1,4 +1,5 @@
-﻿using DormBridge.Application.Exceptions;
+﻿using DormBridge.Application.Commands.Room;
+using DormBridge.Application.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -12,14 +13,14 @@ namespace DormBridge.API.Controllers
         /// </summary>
 
         [HttpPost("room/create-room")]
-        [SwaggerOperation(Summary = "")]
-        public async Task<IActionResult> CreateRoom()
+        [SwaggerOperation(Summary = "Action to create new room")]
+        public async Task<IActionResult> CreateRoom([FromBody] CreateRoom command)
         {
             try
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
 
-                //await _activateStudentAccountHandler.HandleAsyncAction(command);
+                await _createRoomHandler.HandleAsyncAction(command);
 
                 return Ok();
             }
