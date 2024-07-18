@@ -5,7 +5,7 @@ namespace DormBridge.Application.Commands.Student.Handler
 {
     public class DeleteStudentHandler : ICommandHandler<DeleteStudent>
     {
-        private readonly IStudentRepository _studentRepository;
+        private readonly IStudentRepository _studentRepository;       
 
         public DeleteStudentHandler(IStudentRepository studentRepository)
         {
@@ -14,6 +14,7 @@ namespace DormBridge.Application.Commands.Student.Handler
 
         public async Task HandleAsyncAction(DeleteStudent command)
         {
+            
             var student = await _studentRepository.GetById(command.studentId) ?? throw new Exception("Student not exist");
             
             await _studentRepository.DeleteAsync(student);
