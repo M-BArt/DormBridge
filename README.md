@@ -13,6 +13,18 @@
 
 ✅ Implementation of user authentication.
 
+<b>Room Service</b>
+
+🔳 CRUD Actions
+
+<bStudent Service</b>
+
+🔳 CRUD Actions
+
+<b>Dormitory Service</b>
+
+🔳 CRUD Actions
+
 <h3><b>Frontend aspects:</b></h3>
 
 <b>Authentication Layout</b>
