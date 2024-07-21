@@ -41,7 +41,7 @@
 
 ✅ Toolbar / menu view
 
-🔳 Dashboard - User view
+✅ Dashboard - User view
 
 Room Management view
 
