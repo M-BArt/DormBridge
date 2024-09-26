@@ -17,7 +17,7 @@
 
 🔳 CRUD Actions
 
-<bStudent Service</b>
+<b>Student Service</b>
 
 🔳 CRUD Actions
 
